@@ -7,13 +7,11 @@ function App() {
       <Container minHeight="100vh" maxW="3xl">
         <Flex minHeight="100vh" alignItems="center" justifyContent="center" flexDirection="column" >
           <Heading as="h1" size="3xl">
-            College Web Project
+            College Project
           </Heading>
         </Flex>
       </Container>
-
-
-    </div>
+   </div>
   )
 }
 
