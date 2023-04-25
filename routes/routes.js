@@ -1,7 +1,7 @@
-import { Router } from 'express'
-import userController from '../controllers/user.controller'
+const express = require('express')
+const router = express.Router()
+const userController = require('../controllers/user.controller')
 
-const api = Router()
-api.use(userController)
+router.use(userController)
 
-export default Router().use('', api)
+module.exports = router

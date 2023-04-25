@@ -1,12 +1,8 @@
-import express from 'express'
-import path from 'path'
-import cors from 'cors'
-import routes from './routes/routes'
-import dotenv from 'dotenv'
-import { fileURLToPath } from 'url'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const express = require('express')
+const path = require('path')
+const cors = require('cors')
+const routes = require('./routes/routes')
+const dotenv = require('dotenv')
 
 dotenv.config()
 const app = express()
@@ -21,7 +17,7 @@ const corsOptions = {
   origin: '*'
 }
 app.use(cors(corsOptions))
-// app.use(routes)
+app.use(routes)
 
 // error hanlding middleware
 app.use((err, req, res, next) => {

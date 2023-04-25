@@ -5,17 +5,26 @@
   <meta charset="utf-8">
   <title>Example</title>
   <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic" rel="stylesheet" type="text/css">
-  <link href="./css/style.css" rel="stylesheet" />
+  <link href="/tailwindcss.min.css" rel="stylesheet" />
 </head>
 
-<body>
-  <h1>
-    <% names.forEach(name=> { %>
-    <h2>
-      <%= name %>
-    </h2>
-    <% }) %>
-  </h1>
+<body class="bg-gray-100">
+  <nav class="w-full bg-white flex items-center justify-between p-2">
+    <h1>Logo</h1>
+    <div class="menu flex items-center gap-2">
+      <button class="p-2 bg-blue-500 rounded text-white">Login</button>
+      <button class="p-2 bg-green-500 rounded text-white">Register</button>
+    </div>
+  </nav>
+  <div class="main p-5">
+    <h1>
+      <% users.forEach(user=> { %>
+      <h2>
+        <%= user.name %> - <%= user.email %>
+      </h2>
+      <% }) %>
+    </h1>
+  </div>
 </body>
 
 </html>
