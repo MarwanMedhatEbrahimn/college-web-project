@@ -8,8 +8,15 @@ Front-end: [React](https://reactjs.org/) with [Chakra-UI](https://chakra-ui.com/
 
 ## run servers
 
+`cp .env.example .env`
+
 Install nodejs server libraries 
 `npm install`
+
+Run migration
+`npx prisma migrate dev --name init`
+
+
 
 run node server  
 `npm run dev`  
