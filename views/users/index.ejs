@@ -1,0 +1,15 @@
+<%- include('../layout/header.ejs') %>
+
+<div class="container mx-auto p-5">
+  <h1 class="text-3xl font-bold my-2">Users</h1>
+  <div class="flex flex-col gap-2 ">
+    <% users.forEach(user=> { %>
+    <p>
+      <%= user.name %> - <%= user.email %>
+    </p>
+    <% }) %>
+  </div>
+</div>
+
+
+<%- include('../layout/footer.ejs') %>

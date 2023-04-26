@@ -16,6 +16,11 @@ app.use(express.json())
 const corsOptions = {
   origin: '*'
 }
+app.use(function (req, res, next) {
+  req.active = req.path.split('/')[1] // [0] will be empty since routes start with '/'
+  next()
+})
+
 app.use(cors(corsOptions))
 app.use(routes)
 

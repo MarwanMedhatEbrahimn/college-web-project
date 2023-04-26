@@ -2,16 +2,15 @@ const express = require('express')
 const router = express.Router()
 const prisma = require('../prisma/client')
 
-router.get('/users', async (req, res, next) => {
+router.get('/login', async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany()
-    res.render('users/index', { users: users, active: req.active })
+    res.render('pages/login', { active: req.active })
   } catch (error) {
     next(error)
   }
 })
 
-router.post('/users', async (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   try {
     console.log(req.body)
     res.json('sent')
