@@ -1,0 +1,24 @@
+<%- include('../layout/header.ejs') %>
+
+<div class="flex justify-center mt-10">
+  <div class="w-4/12 bg-white p-6 rounded-lg">
+    <h1 class="text-3xl font-bold mb-5">Login</h1>
+    <form class="mt-2" action="" method="post">
+      <div class="mb-4">
+        <label for="email" class="sr-only">Email</label>
+        <input type="text" name="email" id="email" placeholder="Email" class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" class="bg-gray-100 border-2 w-full p-4 rounded-lg" v>
+      </div>
+
+      <div>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-3 rounded font-medium w-full">Login</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include('../layout/footer.ejs') %>
