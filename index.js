@@ -3,11 +3,13 @@ const path = require('path')
 const cors = require('cors')
 const routes = require('./routes/routes')
 const dotenv = require('dotenv')
+const bodyParser = require('body-parser');
 
 dotenv.config()
 const app = express()
 const port = process.env.PORT || 8000
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -20,7 +22,6 @@ app.use(function (req, res, next) {
   req.active = req.path.split('/')[1] // [0] will be empty since routes start with '/'
   next()
 })
-
 app.use(cors(corsOptions))
 app.use(routes)
 
