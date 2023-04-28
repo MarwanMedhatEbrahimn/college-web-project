@@ -4,12 +4,12 @@ const prisma = require('../prisma/client')
 
 router.get('/subjects', async (req, res, next) => {
   try {
-   /* const user = await prisma.user.create({
+  /*  const user = await prisma.user.create({
       data: {
-        email: 'john224.doe@example.com',
-        name: 'John Doe',
-        academicNumber:'7777',
-        isAdmin:true,
+        email: 'joh.doe@example.com',
+        name: 'John',
+        academicNumber:'777',
+        isDoctor:true,
         subject:{create: [
           {
           name:"mnm",
@@ -19,7 +19,7 @@ router.get('/subjects', async (req, res, next) => {
       },
     })
   
-    console.log(user)*/
+   // console.log(user)*/
   
     const subjects = await prisma.user.findMany()
    // console.log(subjects.subject)

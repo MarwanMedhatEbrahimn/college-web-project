@@ -1,15 +1,15 @@
-<%- include('../layout/header.ejs') %>
+<%- include('../../layout/header.ejs') %>
 <% users.forEach(user=> { %>
 <div >
 <div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
   <div class="flex justify-between">
-    <a href="/doctors/modify/<%= user.id %>" class="  ">
+    <a href="/admin/doctors/modify/<%= user.id %>" class="  ">
       <i class="fa-solid fa-gear text-3xl text-gray-400 hover:text-purple-200"></i>    
     </a>
 
     <p class="text-slate-500 text-2xl" > <%= user.name %></p>
 
-    <form action="/doctors/<%= user.id %>" method="POST">
+    <form action="/admin/doctors/<%= user.id %>" method="POST">
       <select multiple class="bg-white	p-2 border-2  " id="my-dropdown" name="my-dropdown" size="3" required>
         <% subjects.forEach(subjects=> { %>
           <option class="bg-white "value=<%= subjects.name %>> <%= subjects.name %> </option>
@@ -22,4 +22,4 @@
   
 </div>
 <% }) %>
-<%- include('../layout/footer.ejs') %>
+<%- include('../../layout/footer.ejs') %>
