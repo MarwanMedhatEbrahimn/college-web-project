@@ -2,14 +2,11 @@ const prisma = require('../../prisma/client')
 
 const showDoctor = async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany(
-
-      {
-        where:{
-          isDoctor:true
-        }
+    const users = await prisma.user.findMany({
+      where: {
+        isDoctor: true
       }
-    )
+    })
 
     const subjects = await prisma.Subject.findMany({
       where: {
@@ -42,13 +39,11 @@ const AssigneSubj = async (req, res, next) => {
       }
     })
 
-    const users = await prisma.user.findMany(
-      {
-        where:{
-          isDoctor:true
-        }
+    const users = await prisma.user.findMany({
+      where: {
+        isDoctor: true
       }
-    )
+    })
 
     const subjects = await prisma.Subject.findMany({
       where: {
