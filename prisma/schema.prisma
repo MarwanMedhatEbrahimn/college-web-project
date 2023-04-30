@@ -18,8 +18,8 @@ model User {
   isAdmin        Boolean?
   isDoctor       Boolean?
   isStudent      Boolean?
-  subject        Subject[]
-  Department     Department? @relation(fields: [departmentId], references: [id])
+  subjects       Subject[]
+  department     Department? @relation(fields: [departmentId], references: [id])
   departmentId   Int?
 }
 

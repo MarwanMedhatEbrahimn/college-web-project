@@ -1,25 +1,47 @@
 <%- include('../../layout/header.ejs') %>
-<% users.forEach(user=> { %>
-<div >
-<div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
-  <div class="flex justify-between">
-    <a href="/admin/doctors/modify/<%= user.id %>" class="  ">
-      <i class="fa-solid fa-gear text-3xl text-gray-400 hover:text-purple-200"></i>    
-    </a>
 
-    <p class="text-slate-500 text-2xl" > <%= user.name %></p>
+<div class="">
+  <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+    <div class="flex items-center justify-between">
+      <h1 class="text-3xl font-bold">Doctors</h1>
+      <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/doctors/add">
+        <i class="fa fa-add"></i>
+        Add
+      </a>
+    </div>
+    <div class=" bg-white rounded shadow">
+      <table class="min-w-full text-left text-sm font-light">
+        <thead class="border-b font-medium dark:border-neutral-500">
+          <tr>
+            <th scope="col" class="px-6 py-4">#</th>
+            <th scope="col" class="px-6 py-4">Name</th>
+            <th scope="col" class="px-6 py-4">Subjects</th>
+            <th scope="col" class="px-6 py-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user=> { %>
+          <tr class="border-b dark:border-neutral-500">
+            <td class="whitespace-nowrap px-6 py-4 font-medium"> <%= user.id %> </td>
+            <td class="whitespace-nowrap px-6 py-4"><%= user.name %></td>
+            <td class="whitespace-nowrap px-6 py-4"><%= user.subjects.length %></td>
+            <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+              <a class="bg-green-500 p-2 text-white rounded px-4 py-2" href="/admin/doctors/modify/<%= user.id %>"><i class="fa fa-eye mr-1"></i>View</a>
+              <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/admin/doctors/modify/<%= user.id %>">
+                <i class="fa fa-pen mr-1"></i> Edit
+              </a>
+              <a class="bg-red-500 p-2 text-white rounded px-4 py-2" href="/admin/doctors/modify/<%= user.id %>"><i class="fa fa-trash mr-1"></i>Delete</a>
+            </td>
 
-    <form action="/admin/doctors/<%= user.id %>" method="POST">
-      <select multiple class="bg-white	p-2 border-2  " id="my-dropdown" name="my-dropdown" size="3" required>
-        <% subjects.forEach(subjects=> { %>
-          <option class="bg-white "value=<%= subjects.name %>> <%= subjects.name %> </option>
+          </tr>
+
           <% }) %>
-      </select>
-      <div class="flex">
-      <button type="submit" class="bg-green-400 rounded-lg  p-2 w-28 my-3 text-sm text-center ">Submit</button></div>
-    </form>
+
+        </tbody>
+      </table>
+    </div>
   </div>
-  
 </div>
-<% }) %>
+
+
 <%- include('../../layout/footer.ejs') %>

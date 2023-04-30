@@ -5,6 +5,10 @@ const showDoctor = async (req, res, next) => {
     const users = await prisma.user.findMany({
       where: {
         isDoctor: true
+      },
+      include: {
+        subjects: true,
+        department: true
       }
     })
 

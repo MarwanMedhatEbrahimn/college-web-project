@@ -6,8 +6,10 @@ const {
   modify,
   showsubj
 } = require('../controllers/admin/ManageDoctors')
-router.get('/doctors', showDoctor)//show all doctors
+
+router.get('/doctors', showDoctor) //show all doctors
 router.get('/doctors/modify/:id', showsubj)
 router.post('/doctors/modify/:us/:id', modify)
 router.post('/doctors/:id', AssigneSubj)
+
 module.exports = router
