@@ -1,46 +1,63 @@
 <%- include('../layout/header.ejs') %>
-
-<div class="container mx-auto p-5">
-  <div class="flex" style="justify-content: space-between;">
-    <h1 class="text-xl font-bold">User</h1>
-    <a href="departments/Insert" style="border-radius: 8px; background-color: rgb(9, 177, 9); color: white; padding: 5px 15px 5px 15px; font-size: 18px;" >Insert</a>
-  </div>
-  
-    <% var x=1 %>
-    <% users.forEach(element => { %>
-      <div class="flex gap-2" style="padding: 20px 50px 20px 50px; margin: 20px 50px 20px 50px; background-color: white; align-items: center; justify-content: space-between;">
-        <h3><%= x++%></h3>
-        <% if (element.isStudent) { %>
-          <h3>Students</h3>
-        <% } %>
-        <% if (element.isDoctor) { %>
-          <h3>Doctor</h3>
-        <% } %>
-        <% if (element.isAdmin) { %>
-          <h3>Admin</h3>
-        <% } %>
-        <h3><%= element.name%></h3>
-        <h3><%= element.email%></h3>
-        <% if (element.isStudent) { %>
-          <h3><%= element.academicNumber%></h3>
-          <h3><%= element.Department.name%></h3>
-          <div style="color: white;"> 
-            <a href="/users/Show_Subject/<%=element.id%>" class="bg-blue-500" style="border-radius: 5px; padding: 5px 10px 5px 10px; margin-right: 10px;">Show Subjects</a> 
-            <a href="/users/Update/<%=element.id%>"  style="border-radius: 5px;background-color: green; padding: 5px 10px 5px 10px; margin-right: 10px;">Update</a>
-            <a href="/users/delete/<%=element.id%>" style="border-radius: 8px; background-color: red; padding: 5px 10px 5px 10px;">Delete</a>
-          </div>
-        <% } %>
-        <% if (element.isDoctor) { %>
-          <div style="color: white;"> 
-            <a href="/users/Show_Subject/<%=element.id%>" class="bg-blue-500" style="border-radius: 5px; padding: 5px 10px 5px 10px; margin-right: 10px;">Show Subjects</a>
-            <a href="/users/Update/<%=element.id%>"  style="border-radius: 5px;background-color: green; padding: 5px 10px 5px 10px; margin-right: 10px;">Update</a>
-            <a href="/users/delete/<%=element.id%>" style="border-radius: 8px; background-color: red; padding: 5px 10px 5px 10px;">Delete</a>
-          </div>
-        <% } %>
+  <div class="">
+    <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Users</h1>
+        <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/users/add">
+          <i class="fa fa-add"></i>
+          Add
+        </a>
       </div>
-    <% }); %>
+      <div class=" bg-white rounded shadow">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-4">Id</th>
+              <th scope="col" class="px-6 py-4">Type</th>
+              <th scope="col" class="px-6 py-4">Name</th>
+              <th scope="col" class="px-6 py-4">Email</th>
+              <th scope="col" class="px-6 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
 
-</div>
+            <% users.forEach((user, idx)=> { %>
+              <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+               <a href="/users/<%= user.id%>"> <%= idx + 1 %></a>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 ">
+                  <span class="text-xs rounded bg-gray-300 text-gray-800 font-bold px-2 py-1 ">
+                    <%= user.type %>
+                  </span>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= user.name %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= user.email %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+                  <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
+                    href="/users/<%= user.id %>"><i class="fa fa-eye mr-1"></i>View</a>
+                  <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/users/edit/<%= user.id %>">
+                    <i class="fa fa-pen mr-1"></i> Edit
+                  </a>
+
+                  <form action="/users/delete/<%= user.id %>" method="POST">
+                    <button type="submit" class="bg-red-500 p-2 text-white rounded px-4 py-2">
+                      <i class="fa fa-trash mr-1"></i>Delete</button>
+                  </form>
+
+                </td>
+              </tr>
+              <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
 
-<%- include('../layout/footer.ejs') %>
+  <%- include('../layout/footer.ejs') %>

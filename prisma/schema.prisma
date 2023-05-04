@@ -13,13 +13,14 @@ datasource db {
 model User {
   id             Int         @id @default(autoincrement())
   email          String      @unique
+  password String
   name           String?
   academicNumber String?
   isAdmin        Boolean?
   isDoctor       Boolean?
   isStudent      Boolean?
-  subject        Subject[]
-  Department     Department? @relation(fields: [departmentId], references: [id])
+  subjects        Subject[]
+  department     Department? @relation(fields: [departmentId], references: [id])
   departmentId   Int?
 }
 
@@ -28,8 +29,8 @@ model Subject {
   name String
   code String?
 
-  departmentId Int
-  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
 
   User   User? @relation(fields: [userId], references: [id])
   userId Int?
