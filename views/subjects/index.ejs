@@ -35,15 +35,15 @@
                   <%= element.name %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
-                  <%= element.depar.name %>
+                  <%= element?.department?.name %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
                   <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
-                    href="/subjects/<%= subject.id %>"><i class="fa fa-eye mr-1"></i>View</a>
-                  <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/subject/edit/<%= subject.id %>">
+                    href="/subjects/<%= element.id %>"><i class="fa fa-eye mr-1"></i>View</a>
+                  <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/subjects/edit/<%= element.id %>">
                     <i class="fa fa-pen mr-1"></i> Edit
                   </a>
-                  <form action="/subject/delete/<%= subject.id %>" method="POST">
+                  <form action="/subject/delete/<%= element.id %>" method="POST">
                     <button type="submit" class="bg-red-500 p-2 text-white rounded px-4 py-2">
                       <i class="fa fa-trash mr-1"></i>Delete</button>
                   </form>

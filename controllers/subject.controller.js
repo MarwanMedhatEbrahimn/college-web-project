@@ -1,33 +1,32 @@
 const express = require('express')
 const router = express.Router()
 const prisma = require('../prisma/client')
-const { getUserType, mapUserType } = require('../utils/user_types')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
  
-router.get('/subject', async (req, res, next) => {
+router.get('/subjects', async (req, res, next) => {
   try {
-    const subject = await prisma.Subject.findMany({
+    const subjects = await prisma.Subject.findMany({
       include: {
         department: true,
-        user: true
+        User: true
       }
     })
-    res.render('subject/index', { subject: subject, active: req.active })
+    res.render('subjects/index', { subjects: subjects, active: req.active })
   } catch (error) {
     next(error)
   }
 })
  
-router.get('/subject/add', async (req, res) => {
+router.get('/subjects/add', async (req, res) => {
   try {
-    res.render('subject/create', { active: req.active })
+    res.render('subjects/create', { active: req.active })
   } catch (error) {
     next(error)
   }
 })
  
-router.post('/subject/create', async (req, res, next) => {
+router.post('/subjects/create', async (req, res, next) => {
   try {
     let { name,code,departmentId } = req.body
     let hashed = await bcrypt.hash(password, saltRounds)
@@ -38,14 +37,14 @@ router.post('/subject/create', async (req, res, next) => {
     }
  
     await prisma.Subject.create({ data: { ...subject } })
-    res.redirect('/subject')
+    res.redirect('/subjects')
   } catch (error) {
     console.log(error)
     next(error)
   }
 })
  
-router.post('/subject/update/:id', async (req, res, next) => {
+router.post('/subjects/update/:id', async (req, res, next) => {
   try {
     let subjectId = Number(req.params.id)
     let { name,code,departmentId } = req.body
@@ -55,47 +54,38 @@ router.post('/subject/update/:id', async (req, res, next) => {
       departmentId
     }
     await prisma.Subject.update({ data: { ...subject }, where: {id: userId} })
-    res.redirect('subject/index')
+    res.redirect('subjects/index')
   } catch (error) {
     console.log(error)
     next(error)
   }
 })
  
-router.get('/subject/edit/:id', async (req, res) => {
+router.get('/subjects/edit/:id', async (req, res) => {
   try {
     const subject= await prisma.Subject.findFirst({
       where: {
         id: Number(req.params.id)
       }
     })
-    res.render('users/edit', { active: req.active, subject: subject })
+    res.render('subjects/edit', { active: req.active, subject: subject })
   } catch (error) {
     next(error)
   }
 })
  
-router.post('/subject/delete/:id', async (req, res, next) => {
+router.post('/subjects/delete/:id', async (req, res, next) => {
   try {
     const subject = await prisma.subject.delete({
       where: {
         id: Number(req.params.id)
       }
     })
-    res.redirect('/subject')
+    res.redirect('/subjects')
   } catch (error) {
     next(error)
   }
 })
  
-router.get('/subject/delete/:id', async (req, res, next) => {
-  try {
-    const id = parseInt(req.params.id)
-    await prisma.User.delete({ where: { id: id } })
-    res.redirect('/subject')
-  } catch (error) {
-    next(error)
-  }
-})
  
 module.exports = router
