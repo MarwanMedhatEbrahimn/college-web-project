@@ -1,0 +1,44 @@
+<%- include('../layout/header.ejs') %>
+    <div class="contianer mx-auto py-5  w-3/5 ">
+
+        <a href="/students" class="bg-blue-500 text-white px-4 py-2 rounded">Back</a>
+        <h1 class="text-3xl font-bold mt-5">Edit User</h1>
+        <div class="bg-white p-5 rounded bg-white shadow my-3">
+
+            <form class="mt-2" action="/students/update/<%= user.id %>" method="post">
+                <% if (user.isAdmin) { %>
+                    <div class="mb-4">
+                        <label for="email" class="sr-only">code</label>
+                        <input type="text" name="code" id="code" placeholder="code"
+                            class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="<%= subject.code %>">
+                    </div>
+                    <% } %>
+
+                        <div class="mb-4">
+                            <label for="email" class="sr-only">Name</label>
+                            <input type="text" name="name" id="name" placeholder="Name" value="<%=student.name%>"
+                                class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="department" class="sr-only">department</label>
+                            <input type="text" name="departmentid" id="departmentid " placeholder="department" value="<%=department.name%>"
+                                class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="dependencies" class="sr-only">dependencies</label>
+                            <input type="text" name="dependencies" id="dependencies" placeholder="dependencies"
+                                class="bg-gray-100 border-2 w-full p-4 rounded-lg" v>
+                        </div>
+
+
+                        <div>
+                            <button type="submit"
+                                class="bg-blue-500 text-white px-4 py-3 rounded font-medium ">Update</button>
+                        </div>
+            </form>
+        </div>
+    </div>
+
+    <%- include('../layout/footer.ejs') %>
