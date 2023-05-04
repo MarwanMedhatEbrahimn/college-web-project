@@ -1,14 +1,45 @@
 <%- include('../layout/header.ejs') %>
 
 <div class="container mx-auto p-5">
-  <h1 class="text-3xl font-bold my-2">Users</h1>
-  <div class="flex flex-col gap-2 ">
-    <% users.forEach(user=> { %>
-    <p>
-      <%= user.name %> - <%= user.email %>
-    </p>
-    <% }) %>
+  <div class="flex" style="justify-content: space-between;">
+    <h1 class="text-xl font-bold">User</h1>
+    <a href="departments/Insert" style="border-radius: 8px; background-color: rgb(9, 177, 9); color: white; padding: 5px 15px 5px 15px; font-size: 18px;" >Insert</a>
   </div>
+  
+    <% var x=1 %>
+    <% users.forEach(element => { %>
+      <div class="flex gap-2" style="padding: 20px 50px 20px 50px; margin: 20px 50px 20px 50px; background-color: white; align-items: center; justify-content: space-between;">
+        <h3><%= x++%></h3>
+        <% if (element.isStudent) { %>
+          <h3>Students</h3>
+        <% } %>
+        <% if (element.isDoctor) { %>
+          <h3>Doctor</h3>
+        <% } %>
+        <% if (element.isAdmin) { %>
+          <h3>Admin</h3>
+        <% } %>
+        <h3><%= element.name%></h3>
+        <h3><%= element.email%></h3>
+        <% if (element.isStudent) { %>
+          <h3><%= element.academicNumber%></h3>
+          <h3><%= element.Department.name%></h3>
+          <div style="color: white;"> 
+            <a href="/users/Show_Subject/<%=element.id%>" class="bg-blue-500" style="border-radius: 5px; padding: 5px 10px 5px 10px; margin-right: 10px;">Show Subjects</a> 
+            <a href="/users/Update/<%=element.id%>"  style="border-radius: 5px;background-color: green; padding: 5px 10px 5px 10px; margin-right: 10px;">Update</a>
+            <a href="/users/delete/<%=element.id%>" style="border-radius: 8px; background-color: red; padding: 5px 10px 5px 10px;">Delete</a>
+          </div>
+        <% } %>
+        <% if (element.isDoctor) { %>
+          <div style="color: white;"> 
+            <a href="/users/Show_Subject/<%=element.id%>" class="bg-blue-500" style="border-radius: 5px; padding: 5px 10px 5px 10px; margin-right: 10px;">Show Subjects</a>
+            <a href="/users/Update/<%=element.id%>"  style="border-radius: 5px;background-color: green; padding: 5px 10px 5px 10px; margin-right: 10px;">Update</a>
+            <a href="/users/delete/<%=element.id%>" style="border-radius: 8px; background-color: red; padding: 5px 10px 5px 10px;">Delete</a>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+
 </div>
 
 
