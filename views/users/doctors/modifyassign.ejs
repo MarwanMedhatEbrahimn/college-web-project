@@ -17,7 +17,7 @@
     <a href="/admin/doctors" type="button" class="text-white bg-blue-700 hover:bg-blue-800   focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2  my-4 ">Doctors</a>
   </div>
 
-  <% if (sub[0]===undefined) { %>
+  <% if (subjects[0]===undefined) { %>
   <div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
     <div class="">
       <p class="text-4xl text-center font-bold">There are no Data</p>
@@ -26,7 +26,7 @@
   </div>
   <% } %>
 
-  <% sub?.forEach(item=> { %>
+  <% subjects?.forEach(item=> { %>
   <div>
 
     <div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
