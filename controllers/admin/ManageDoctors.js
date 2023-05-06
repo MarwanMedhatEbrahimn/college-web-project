@@ -79,15 +79,23 @@ const showsubjuser = async (req, res, next) => {
     next(error)
   }
 }
-const Assign = async (req, res) => {
-  const id = parseInt(req.params.id)
-  subs = req.body.data
-  for (let i = 0; i < subs.length; i++) {
-    const sub = parseInt(subs[i])
-    await prisma.subject.update({
-      where: { id: sub },
-      data: { userId: id }
-    })
+const Assign = async (req, res, next) => {
+  try {
+    const id = parseInt(req.params.id)
+    subs = req.body.data
+    if (!subs) {
+      return
+    }
+    for (let i = 0; i < subs.length; i++) {
+      const sub = parseInt(subs[i])
+      await prisma.subject.update({
+        where: { id: sub },
+        data: { userId: id }
+      })
+    }
+  } catch (error) {
+    next(error)
   }
+
 }
 module.exports = { showDoctor, modify, showsubj, Assign, showsubjuser }
