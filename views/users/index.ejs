@@ -16,6 +16,7 @@
               <th scope="col" class="px-6 py-4">Type</th>
               <th scope="col" class="px-6 py-4">Name</th>
               <th scope="col" class="px-6 py-4">Email</th>
+              <th scope="col" class="px-6 py-4">Subjects</th>
               <th scope="col" class="px-6 py-4">Actions</th>
             </tr>
           </thead>
@@ -36,6 +37,9 @@
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
                   <%= user.email %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= user.subjects.length %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
                   <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
