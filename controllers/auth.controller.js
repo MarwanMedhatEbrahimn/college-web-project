@@ -37,40 +37,9 @@ router.post('/login', async (req, res, next) => {
       res.cookie('user', user);
       return res.send('<h1>Doctor</h1>');
     }
-
-
-
-    // Verify password
-    // const isValidPassword = await bcrypt.compare(password, user.password);
-
-    // if (!isValidPassword) {
-    //   return res.status(401).send('Invalid email or password');
-    // }
-
-    // Set user type cookie
-    // res.cookie('userType', userType);
-    // console.log(userType)
-
-    // // Redirect to appropriate page
-    // if (userType === 'Student') {
-    //   return res.redirect('/student');
-    // } 
-    // else if (userType === 'Admin') {
-    //   return res.redirect('/admin');
-    // } esle {
-    //   return res.redirect('/Doctor');
-    // }
-
-    // res.json('sent')
-
   }
-  // try {
-  //   console.log(req.body)
-  //   res.json('sent')
-  // } 
   catch (error) {
     next(error)
   }
 })
-
 module.exports = router
