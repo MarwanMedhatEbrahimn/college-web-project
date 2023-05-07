@@ -93,6 +93,7 @@ const Assign = async (req, res, next) => {
         data: { userId: id }
       })
     }
+    return res.json({msg: "success"})
   } catch (error) {
     next(error)
   }

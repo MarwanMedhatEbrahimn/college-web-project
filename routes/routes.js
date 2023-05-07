@@ -9,7 +9,7 @@ const adminR = require('./adminRouter')
 let { checkSignIn,  } = middlewares
 
 router.use(authController)
-router.use('/admin', adminR, checkSignIn)
+router.use('/admin', checkSignIn, adminR)
 router.use(homeController, checkSignIn)
 router.use(userController, checkSignIn)
 router.use(subjectController, checkSignIn)
