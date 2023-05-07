@@ -1,44 +1,53 @@
+const bcrypt = require('bcrypt')
 const express = require('express')
 const router = express.Router()
 const prisma = require('../prisma/client')
 
 router.get('/login', async (req, res, next) => {
   try {
-    res.render('pages/login', { active: req.active })
+    res.render('pages/login', { active: req.active, error: false, email: '' })
   } catch (error) {
     next(error)
   }
 })
 
-router.post('/login', async (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  try {
-    // Find user in database
-    const user = await prisma.User.findFirst({
-      where: {
-        email: email,
-        password: password
-      }
-    });
-    if (!user) {
-      return res.status(401).send('<h1>Invalid email or password</h1>');
+router.get('/logout', async (req, res, next) => {
+  req.session.destroy(function () {
+    console.log('user logged out.')
+  })
+ return res.redirect('/login')
+})
 
-    } else if (user.isAdmin && password) {
-      // Set user cookie
-      res.cookie('user', user);
-      return res.send('<h1>Admin</h1>');
-    } else if (user.isStudent && password) {
-      // Set user cookie
-      res.cookie('user', user);
-      return res.send('<h1>Student</h1>');
-    } else if (user.isDoctor && password) {
-      // Set user cookie
-      res.cookie('user', user);
-      return res.send('<h1>Doctor</h1>');
+router.post('/login', async (req, res, next) => {
+  const email = req.body.email
+  const password = req.body.password
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email
+      }
+    })
+    if(!user) {
+     return res.render('pages/login', {
+        error: true,
+        email: "",
+        active: req.active
+      })
+      
     }
-  }
-  catch (error) {
+    const isSamePassword = await bcrypt.compare(password, user.password)
+    if (isSamePassword) {
+      delete user.password
+      req.session.user = user
+      res.redirect('/users')
+    } else {
+      res.render('pages/login', {
+        error: true,
+        email: user.email,
+        active: req.active
+      })
+    }
+  } catch (error) {
     next(error)
   }
 })
