@@ -1,0 +1,19 @@
+<%- include('../layout/header.ejs') %>
+
+<div class="container mx-auto p-5">
+  <h1 class="text-xl font-bold" style="margin-bottom:20px;">Departments</h1>
+    <% var x=1 %>
+    <% subjects.forEach(element => { %>
+      <div class="flex gap-2" style="padding: 20px 50px 20px 50px; margin: 0px 50px 40px 50px; background-color: white; align-items: center; justify-content: space-between;">
+        <h3><%= x++%></h3>
+        <h3><%= element.name%></h3>
+        <h3><%= element.code%></h3>
+      </div>
+    <% }); %>
+    <a href="/users" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px; margin-right: 10px; color:white; font-size: 20px;">Back</a>
+
+
+</div>
+
+
+<%- include('../layout/footer.ejs') %>

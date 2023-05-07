@@ -16,20 +16,23 @@ model User {
   isAdmin        Boolean?
   isDoctor       Boolean?
   isStudent      Boolean?
+  subjects        Subject[]
+  department     Department? @relation(fields: [departmentId], references: [id])
   departmentId   Int?
-  subject        Subject[]
-  Department     Department? @relation(fields: [departmentId], references: [id])
 }
 
 model Subject {
-  id           Int        @id @default(autoincrement())
-  name         String
-  code         String?
-  departmentId Int
-  userId       Int?
+  id   Int     @id @default(autoincrement())
+  name String
+  code String?
+
+  departmentId Int?
+  department   Department? @relation(fields: [departmentId], references: [id])
+
+  User   User? @relation(fields: [userId], references: [id])
+  userId Int?
+
   dependencies String?
-  User         User?      @relation(fields: [userId], references: [id])
-  department   Department @relation(fields: [departmentId], references: [id])
 }
 
 model Department {
