@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,34 +10,32 @@ datasource db {
 model User {
   id             Int         @id @default(autoincrement())
   email          String      @unique
+  password       String
   name           String?
   academicNumber String?
   isAdmin        Boolean?
   isDoctor       Boolean?
   isStudent      Boolean?
+  departmentId   Int?
   subject        Subject[]
   Department     Department? @relation(fields: [departmentId], references: [id])
-  departmentId   Int?
 }
 
 model Subject {
-  id   Int     @id @default(autoincrement())
-  name String
-  code String?
-
+  id           Int        @id @default(autoincrement())
+  name         String
+  code         String?
   departmentId Int
-  department   Department @relation(fields: [departmentId], references: [id])
-
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
-
+  userId       Int?
   dependencies String?
+  User         User?      @relation(fields: [userId], references: [id])
+  department   Department @relation(fields: [departmentId], references: [id])
 }
 
 model Department {
   id      Int       @id @default(autoincrement())
   name    String
   code    String
-  users   User[]
   Subject Subject[]
+  users   User[]
 }
