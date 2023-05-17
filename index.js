@@ -18,11 +18,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(cookieParser())
 app.use(session({ secret: 'mysecretkey' }))
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-)
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
 
 const corsOptions = {
   origin: '*'

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>College Web Project</title>
+  <link href="https://fonts.googleapis.com/css?family=Lora:400,400italic" rel="stylesheet" type="text/css">
+  <link href="/tailwindcss.min.css" rel="stylesheet" />
+  <link href="/all.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="bg-gray-100">
+
+
+  <div class=" m-5 p-6    max-w-6xl mx-auto">
+    <a href="/admin/doctors" type="button" class="text-white bg-blue-700 hover:bg-blue-800   focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2  my-4 ">Doctors</a>
+  </div>
+
+  <% if (subjects[0]===undefined) { %>
+  <div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
+    <div class="">
+      <p class="text-4xl text-center font-bold">There are no Data</p>
+    </div>
+  </div>
+  </div>
+  <% } %>
+
+  <% subjects?.forEach(item=> { %>
+  <div>
+
+    <div class=" m-10 p-6 max-w-6xl mx-auto bg-white rounded-xl shadow-lg  items-center ">
+      <div class="flex justify-between">
+        <p class="text-slate-500 text-2xl">
+          <%= item.name %>
+        </p>
+        <p class="text-slate-500 text-2xl">
+          <%= item.code %>
+        </p>
+        <form action="/admin/doctors/modify/<%= item.userId %>/<%= item.id %>" method="POST">
+          </select>
+          <div class="flex">
+            <button type="submit" class="bg-red-600 rounded-lg  p-2 w-28 my-3 text-sm text-center text-white font-bold ">Delete</button>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+    <% }) %>
+
+  <%- include('../../layout/footer.ejs') %>

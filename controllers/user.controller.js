@@ -9,6 +9,7 @@ router.get('/users', async (req, res, next) => {
   try {
     const users = await prisma.user.findMany({
       include: {
+        subjects: true,
         department: true
       }
     })
@@ -78,6 +79,10 @@ router.get('/users/:id', async (req, res) => {
     const user = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id)
+      },
+      include: {
+        subjects: true,
+        department: true
       }
     })
     user.type = getUserType(user)
