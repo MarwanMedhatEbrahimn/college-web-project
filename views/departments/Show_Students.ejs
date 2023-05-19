@@ -1,0 +1,53 @@
+<%- include('../layout/header.ejs') %>
+  <div class="">
+    <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Departments</h1>
+      </div>
+      <div class=" bg-white rounded shadow">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-4">#</th>
+              <th scope="col" class="px-6 py-4">Name</th>
+              <th scope="col" class="px-6 py-4">Email</th>
+              <th scope="col" class="px-6 py-4">Academic Number</th>
+              <th scope="col" class="px-6 py-4">Department</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            <% Students.forEach((Student, idx)=> { %>
+              <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                  <%= idx + 1 %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= Student.name %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= Student.email %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= Student.academicNumber %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= department.name %>
+                </td>
+              </tr>
+              <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="">
+        <a href="/departments" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px;  color:white; font-size: 20px;">Back</a>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <%- include('../layout/footer.ejs') %>

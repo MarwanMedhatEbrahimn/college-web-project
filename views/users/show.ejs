@@ -34,7 +34,133 @@
                 </div>
             </div>
         </div>
-
+        <% if (user.isStudent) { %>
+            <% if (registered.length!=0) { %>
+                <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+                    <div class="flex items-center justify-between">
+                    <h1 class="text-3xl font-bold">registered Subject</h1>
+                    </div>
+                    <div class=" bg-white rounded shadow">
+                    <table class="min-w-full text-left text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col" class="px-6 py-4">#</th>
+                            <th scope="col" class="px-6 py-4">Name</th>
+                            <th scope="col" class="px-6 py-4">Code</th>
+                            <th scope="col" class="px-6 py-4">department</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            
+                        <% registered.forEach((sub, idx)=> { %>
+                            <tr class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap px-6 py-4 font-medium">
+                                <%= idx + 1 %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.name %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.code %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.department.name %>
+                            </td>
+                            </tr>
+                            <% }) %>
+            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            <% } %>
+            <% if (succeeded.length!=0) { %>
+                <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+                    <div class="flex items-center justify-between">
+                    <h1 class="text-3xl font-bold">succeeded Subject</h1>
+                    </div>
+                    <div class=" bg-white rounded shadow">
+                    <table class="min-w-full text-left text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col" class="px-6 py-4">#</th>
+                            <th scope="col" class="px-6 py-4">Name</th>
+                            <th scope="col" class="px-6 py-4">Code</th>
+                            <th scope="col" class="px-6 py-4">department</th>
+                            <th scope="col" class="px-6 py-4">degree</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            
+                        <% succeeded.forEach((sub, idx)=> { %>
+                            <tr class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap px-6 py-4 font-medium">
+                                <%= idx + 1 %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.name %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.code %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.department.name %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.degree %>
+                            </td>
+                            </tr>
+                            <% }) %>
+            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            <% } %>
+            <% if (failure.length!=0) { %>
+                <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+                    <div class="flex items-center justify-between">
+                    <h1 class="text-3xl font-bold">failure Subject</h1>
+                    </div>
+                    <div class=" bg-white rounded shadow">
+                    <table class="min-w-full text-left text-sm font-light">
+                        <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col" class="px-6 py-4">#</th>
+                            <th scope="col" class="px-6 py-4">Name</th>
+                            <th scope="col" class="px-6 py-4">Code</th>
+                            <th scope="col" class="px-6 py-4">department</th>
+                            <th scope="col" class="px-6 py-4">degree</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+            
+                        <% failure.forEach((sub, idx)=> { %>
+                            <tr class="border-b dark:border-neutral-500">
+                            <td class="whitespace-nowrap px-6 py-4 font-medium">
+                                <%= idx + 1 %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.name %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.code %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.subject.department.name %>
+                            </td>
+                            <td class="whitespace-nowrap px-6 py-4">
+                                <%= sub.degree %>
+                            </td>
+                            </tr>
+                            <% }) %>
+            
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            <% } %>
+          <% } %>
     </div>
 
 

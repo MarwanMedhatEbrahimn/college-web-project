@@ -80,9 +80,44 @@ router.get('/users/:id', async (req, res) => {
         id: Number(req.params.id)
       }
     })
+    const succeeded = await prisma.stateOFsub.findMany({
+      where:{
+        user_Id: Number(req.params.id),
+        state: "succeeded"
+      },
+      include: {
+        subject: {
+          select :{name:true, code:true,department:true}
+        }
+      }
+    })
+    const failure = await prisma.stateOFsub.findMany({
+      where:{
+        user_Id: Number(req.params.id),
+        state: "failure"
+      },
+      include: {
+        subject: {
+          select :{name:true, code:true,department:true}
+        }
+      }
+      
+    })
+    const registered = await prisma.stateOFsub.findMany({
+      where:{
+        user_Id: Number(req.params.id),
+        state: "registered"
+      },
+      include: {
+        subject: {
+          select :{name:true, code:true,department:true}
+        }
+      }
+    })
     user.type = getUserType(user)
-    res.render('users/show', { active: req.active, user: user })
+    res.render('users/show', { active: req.active, user: user, registered: registered, succeeded: succeeded, failure: failure })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 })
@@ -130,16 +165,6 @@ router.get('/users/Show_Subject/:id', async (req, res, next) => {
       subjects: subjects.subject,
       active: req.active
     })
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.get('/users/delete/:id', async (req, res, next) => {
-  try {
-    const id = parseInt(req.params.id)
-    const flag = await prisma.User.delete({ where: { id: id } })
-    res.redirect('/users')
   } catch (error) {
     next(error)
   }

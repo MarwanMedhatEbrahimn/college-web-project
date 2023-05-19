@@ -1,0 +1,29 @@
+<%- include('../layout/header.ejs') %>
+    <div class="contianer mx-auto py-5  w-3/5 ">
+        <h1 class="text-3xl font-bold mt-5">Create department</h1>
+        <div class="bg-white p-5 rounded bg-white shadow my-3" x-data="{type: 'Student'}">
+
+            <form class="mt-2" action="/department/Insert" method="post">
+
+                <div class="mb-4">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                </div>
+
+                <div class="mb-4">
+                    <label for="code" class="sr-only">Code</label>
+                    <input type="text" name="code" id="code" placeholder="Code"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                </div>
+
+                <div>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-3 rounded font-medium ">Create</button>
+                </div>
+            </form>
+        </div>
+        <a href="/departments" class="bg-gray-700 text-white px-4 py-2 rounded" style="color:white; font-size: 20px;">Back</a>
+
+    </div>
+
+<%- include('../layout/footer.ejs') %>
