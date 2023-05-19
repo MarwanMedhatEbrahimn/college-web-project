@@ -1,7 +1,6 @@
 <%- include('../layout/header.ejs') %>
     <div class="contianer mx-auto py-5  w-3/5 ">
-
-    <a href="/users" class="bg-blue-500 text-white px-4 py-2 rounded">Back</a>
+        <a href="/users" class="bg-blue-500 text-white px-4 py-2 rounded">Back</a>
         <div class="bg-white rounded p-5 shadow my-3">
             <div class="p-5">
                 <div class="flex flex-col gap-3">
@@ -11,26 +10,34 @@
                             <%= user.type %>
                         </p>
                     </div>
-                    <% if (user.type === "Student") { %>
-                     <div class="">
-                        <h3 class="text-lg">Academic Number</h3>
-                        <p class=" text-gray-700">
-                            <%= user.academicNumber %>
-                        </p>
-                    </div>                       
-                    <% } %>
-                    <div class="">
-                        <h3 class="text-lg">Name</h3>
-                        <p class=" text-gray-700">
-                            <%= user.name %>
-                        </p>
-                    </div>
-                    <div class="">
-                        <h3 class="text-lg">Email</h3>
-                        <p class=" text-gray-700">
-                            <%= user.email %>
-                        </p>
-                    </div>
+                    <% if (user.type==="Student" ) { %>
+                        <div class="">
+                            <h3 class="text-lg">Academic Number</h3>
+                            <p class=" text-gray-700">
+                                <%= user.academicNumber %>
+                            </p>
+                        </div>
+                        <% } %>
+                            <div class="">
+                                <h3 class="text-lg">Name</h3>
+                                <p class=" text-gray-700">
+                                    <%= user.name %>
+                                </p>
+                            </div>
+                            <div class="">
+                                <h3 class="text-lg">Email</h3>
+                                <p class=" text-gray-700">
+                                    <%= user.email %>
+                                </p>
+                            </div>
+                            <div class="">
+                                <h3 class="text-lg">Subjects</h3>
+                                <ul class="list-disc list-inside ml-3">
+                                    <% user.subjects.forEach(subject=> { %>
+                                         <li> <%= subject.name %> </li> 
+                                    <% }) %>
+                                </ul>
+                            </div>
                 </div>
             </div>
         </div>

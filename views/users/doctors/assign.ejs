@@ -1,0 +1,100 @@
+<%- include('../../layout/header.ejs') %>
+
+    <div class="">
+        <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+            <div class="flex items-center justify-between">
+                <h1 class="text-3xl font-bold">Subjects</h1>
+                <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/users">
+                    back
+                </a>
+            </div>
+            <div class="bg-white rounded shadow">
+                <table class="min-w-full text-left text-sm font-light">
+                    <thead class="border-b font-medium dark:border-neutral-500">
+                        <tr>
+                            <th scope="col" class="px-6 py-4">#</th>
+                            <th scope="col" class="px-6 py-4">Name</th>
+                            <th scope="col" class="px-6 py-4">Subjects</th>
+                            <th scope="col" class="px-6 py-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% subjects.forEach (function(subject, index) { %>
+
+                            <tr class="border-b dark:border-neutral-500">
+                                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                                    <%= subject.id %>
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <%= subject.name %>
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4">
+                                    <%= subject.code %>
+                                </td>
+                                <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+                                    <button style="outline: none; border: none" id="btn"
+                                        onclick="switchIcons('<%=index %>','<%=subject.id%>','<%=id %>')">
+                                        <i id="-<%=index%>" class="fa-solid fa-xmark text-lg text-red-500" <% if (
+                                            subject.userId !==id ) { %>style="display: none"<% } %>
+                                                ></i>
+                                        <i id="+<%=index%>" class="fa-solid fa-plus text-lg text-green-500" <% if (
+                                            subject.userId===id ) { %>style="display: none"<% } %>
+                                                ></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <button id="btn" class="bg-green-500 font-bold text-white h-10" onclick="commit('<%=id %>')">
+                Commit
+            </button>
+        </div>
+        <script>
+            var array = []
+            var del = []
+            function commit(id) {
+                var data = {
+                    subjects: array
+                }
+                console.log(id)
+
+                fetch('/admin/doctor/assign/<%=id %>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data: array, dele: del })
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        console.log(data)
+                        window.location.replace("http://localhost:8000/users")
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error)
+                    })
+            }
+            function switchIcons(index, id, id_user) {
+                var icon1 = document.getElementById(`+${index}`)
+                var icon2 = document.getElementById(`-${index}`)
+                if (icon1.style.display == 'none') {
+                    del.push(id)
+                    icon1.style.display = 'block'
+                    icon2.style.display = 'none'
+                    array = array.filter(function (sub) {
+                        return sub !== id
+                    })
+                } else {
+                    icon2.style.display = 'block'
+                    icon1.style.display = 'none'
+                    array.push(id)
+                }
+            }
+        </script>
+
+        <%- include('../../layout/footer.ejs') %>
+    </div>
