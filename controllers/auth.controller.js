@@ -19,6 +19,7 @@ router.get('/logout', async (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
+  
   const email = req.body.email
   const password = req.body.password
   try {
