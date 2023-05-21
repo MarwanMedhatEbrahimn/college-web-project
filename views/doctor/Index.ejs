@@ -1,0 +1,47 @@
+<%- include('../layout/header.ejs') %>
+
+    <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Files</h1>
+        <div class="flex">
+          <a class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-700 mr-5" href="/Doctor/File/Add/<%=id%>">
+            <i class="fa fa-add"></i>
+            Add
+          </a>
+          <a class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-700" href="/doctor/Student_registered/<%=id%>">
+            <i class="fa fa-add"></i>
+            Set Degrees
+          </a>
+        </div>
+      </div>
+      <div class="container">
+        <% Files.forEach((File, idx)=> { %>
+          <div class="bg-white block flex shadow-xl m-8 hover:shadow-2xl transform" >
+              <a href="/download/<%=File.Url%>" download target="_blank" class="bg-black flex flex-col justify-center p-3 hover:bg-blue-900 bg-blue-700" >
+                  <div >
+                      <i class="fa-regular fa-file-pdf text-3xl fa-rotate-270" style="color: white;"></i>
+                  </div>
+              </a>
+              <div class="p-5 w-full">
+                  <div class="flex justify-between">
+                      <h2 class="font-bold text-2xl mb-2"><%=File.Name%></h2>
+                      <div class="flex">
+                        <a class="bg-blue-500 p-2 text-white rounded p-3 rounded-2xl mr-3 hover:bg-blue-600" href="/Doctor/edit/<%=File.id%>">
+                          <i class="fa fa-pen mr-1"></i> Edit
+                        </a>
+                        <a href="/Doctor/delete/<%=File.id%>/Subject/<%=id%>" class="block bg-red-600 text-white p-3 rounded-2xl hover:bg-red-700 "><i class="fa fa-trash mr-1"></i>Delete</a>
+                      </div>
+                  </div>
+                  <pre class="text-gray-500 text-xl mb-2"><%=File.description%></pre>
+              </div>
+          </div>
+        <% }) %>
+      </div>
+      <div class="">
+        <a href="/" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px;  color:white; font-size: 20px;">Back</a>
+      </div>
+    </div> 
+
+
+
+  <%- include('../layout/footer.ejs') %>

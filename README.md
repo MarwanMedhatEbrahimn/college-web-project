@@ -16,8 +16,6 @@ Install nodejs server libraries
 Run migration
 `npx prisma migrate dev --name init`
 
-
-
 run node server  
 `npm run dev`  
 
@@ -27,4 +25,7 @@ Install React Project libraries
 
 run react server  
 `npm run dev` on web directory  
+
+INstall multer to upload file
+npm install multer
 

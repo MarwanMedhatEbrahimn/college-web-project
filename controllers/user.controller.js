@@ -4,8 +4,8 @@ const prisma = require('../prisma/client')
 const { getUserType, mapUserType } = require('../utils/user_types')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
-
-router.get('/users', async (req, res, next) => {
+const {isAdmin} = require("../middlewares/auth")
+router.get('/users',isAdmin, async (req, res, next) => {
   try {
     const users = await prisma.user.findMany({
       include: {
@@ -22,7 +22,7 @@ router.get('/users', async (req, res, next) => {
   }
 })
 
-router.get('/users/add', async (req, res) => {
+router.get('/users/add',isAdmin, async (req, res) => {
   try {
     res.render('users/create', { active: req.active })
   } catch (error) {
@@ -30,7 +30,7 @@ router.get('/users/add', async (req, res) => {
   }
 })
 
-router.post('/users/create', async (req, res, next) => {
+router.post('/users/create',isAdmin, async (req, res, next) => {
   try {
     let { academic_number, name, email, password, type } = req.body
     let hashed = await bcrypt.hash(password, saltRounds)
@@ -50,7 +50,7 @@ router.post('/users/create', async (req, res, next) => {
   }
 })
 
-router.post('/users/update/:id', async (req, res, next) => {
+router.post('/users/update/:id',isAdmin, async (req, res, next) => {
   try {
     let userId = Number(req.params.id)
     let { academic_number, name, email, new_password, type } = req.body
@@ -71,10 +71,7 @@ router.post('/users/update/:id', async (req, res, next) => {
     next(error)
   }
 })
-
-
-
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id',isAdmin, async (req, res) => {
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -128,7 +125,7 @@ router.get('/users/:id', async (req, res) => {
 })
 
 
-router.get('/users/edit/:id', async (req, res) => {
+router.get('/users/edit/:id',isAdmin, async (req, res) => {
   try {
     const user = await prisma.user.findFirst({
       where: {
@@ -142,7 +139,7 @@ router.get('/users/edit/:id', async (req, res) => {
   }
 })
 
-router.post('/users/delete/:id', async (req, res, next) => {
+router.post('/users/delete/:id',isAdmin, async (req, res, next) => {
   try {
     const user = await prisma.user.delete({
       where: {
@@ -155,7 +152,7 @@ router.post('/users/delete/:id', async (req, res, next) => {
   }
 })
 
-router.get('/users/Show_Subject/:id', async (req, res, next) => {
+router.get('/users/Show_Subject/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const subjects = await prisma.user.findFirst({

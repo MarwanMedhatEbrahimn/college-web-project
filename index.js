@@ -6,7 +6,7 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
-
+var multer = require('multer');
 dotenv.config()
 const app = express()
 const port = process.env.PORT || 8000

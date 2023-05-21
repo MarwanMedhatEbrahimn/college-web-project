@@ -1,0 +1,30 @@
+<%- include('../layout/header.ejs') %>
+    <div class="contianer mx-auto py-5  w-3/5 ">
+        <h1 class="text-3xl font-bold mt-5">Edit User</h1>
+        <div class="bg-white p-5 rounded bg-white shadow my-3">
+
+            <form class="mt-2" action="/Doctor/edit/<%=file.id%>/Subject/<%=file.SubjectId%>" method="post">
+                <div class="mb-4">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name" value="<%=file.Name%>"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                </div>
+
+                <div class="mb-4">
+                    <label for="description" class="sr-only">Description</label>
+                    <textarea name="description" id="description" placeholder="description"
+                    class="bg-gray-100 border-2 w-full p-4 rounded-lg"><%=file.description%></textarea>
+                </div>
+
+                <div>
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-4 py-3 rounded font-medium ">Update</button>
+                </div>
+            </form>
+        </div>
+        <div class="">
+            <a href="/Doctor/subject/<%=file.SubjectId%>" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px;  color:white; font-size: 20px;">Back</a>
+          </div>
+    </div>
+
+    <%- include('../layout/footer.ejs') %>

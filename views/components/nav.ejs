@@ -22,7 +22,11 @@
           <a href="/"
             class="block py-2 pl-3 pr-4 text-gray-900  <%= active === 'home' ? 'text-blue-800'  : 'text-gray-900' %> rounded hover:text-blue-900">Home</a>
         </li>
-
+        <% if (user.isDoctor) { %>
+          <li>
+            
+          </li>
+        <% } %>
       <% if (user.isAdmin) { %>
         <li>
           <a href="/users"
