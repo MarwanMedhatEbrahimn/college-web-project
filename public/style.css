@@ -2,3 +2,12 @@
 .transform:hover {
     transform: scale(1.009);
 }
+
+#searchInput {
+    padding: 10px;
+    width: 300px;
+    border-radius: 20px;
+}
+#searchInput:active{
+    border: none;
+}

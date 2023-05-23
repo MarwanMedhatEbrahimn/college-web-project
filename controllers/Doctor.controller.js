@@ -53,7 +53,8 @@ router.post("/Doctor/File/Add/:id", upload.single("file") , async function (req,
     let { name, description } = req.body
     await prisma.Files.create({data:{
         Name:name, description:description, 
-        Url:req.file.filename,SubjectId:Number(req.params.id)
+        Url:req.file.filename,
+        SubjectId:Number(req.params.id)
       }})
     
     res.redirect('/Doctor/subject/'+Number(req.params.id))

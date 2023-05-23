@@ -5,17 +5,42 @@ const { getUserType, mapUserType } = require('../utils/user_types')
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 const {isAdmin} = require("../middlewares/auth")
+
+async function search (name){
+  const users = await prisma.user.findMany({
+    where:{
+      name:{
+        contains:name
+      }
+    },
+    include: {
+      subjects: true,
+      department: true
+    }
+  })
+  users.forEach((user) => {
+    user.type = getUserType(user)
+  })
+  return users
+}
+
+router.post('/search',isAdmin,async(req,res)=>{
+  try {
+    const users = await search(req.body.name)
+    res.set('Access-Control-Allow-Origin', '*');
+    return res.json({ users: users })
+
+  } catch (error) {
+    return res.json({ users:{} })
+  }
+
+});
+
+
+
 router.get('/users',isAdmin, async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany({
-      include: {
-        subjects: true,
-        department: true
-      }
-    })
-    users.forEach((user) => {
-      user.type = getUserType(user)
-    })
+    const users = await search("")
     res.render('users/index', { users: users, active: req.active })
   } catch (error) {
     next(error)
