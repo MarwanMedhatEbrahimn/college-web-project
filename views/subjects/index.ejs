@@ -1,13 +1,60 @@
 <%- include('../layout/header.ejs') %>
 
-<div class="container mx-auto p-5">
-  <h1 class="text-xl font-bold">Subjects</h1>
-  <div class="flex flex-col gap-2 ">
-    <% subjects.forEach(subject=> { %>
-    <p>
-      <%= subject.name %>
-    </p>
-    <% }) %>
+<div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+  <div class="flex items-center justify-between">
+    <h1 class="text-3xl font-bold">Subjects</h1>
+    <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/subjects/Insert">
+      <i class="fa fa-add"></i>
+      Add
+    </a>
+  </div>
+
+  <div class=" bg-white rounded shadow">
+    <table class="min-w-full text-left text-sm font-light">
+      <thead class="border-b font-medium dark:border-neutral-500">
+        <tr>
+          <th scope="col" class="px-6 py-4">Id</th>
+          <th scope="col" class="px-6 py-4">Name</th>
+          <th scope="col" class="px-6 py-4">Code</th>
+          <th scope="col" class="px-6 py-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% subjects.forEach((subject, idx)=> { %>
+          <tr class="border-b dark:border-neutral-500">
+            <td class="whitespace-nowrap px-6 py-4 font-medium">
+              <%= idx + 1 %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= subject.name %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4">
+              <%= subject.code %>
+            </td>
+            <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+              <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
+                href="/subjects/Show_Students/<%= subject.id %>">
+                <i class="fa fa-eye mr-1"></i>Students
+              </a>
+              <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
+                href="/subjects/Show_Departments/<%= subject.id %>">
+                <i class="fa fa-eye mr-1"></i>Departments
+              </a>
+
+              <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/subjects/Update/<%= subject.id %>">
+                <i class="fa fa-pen mr-1"></i> Edit
+              </a>
+
+              <form action="/subjects/delete/<%= subject.id %>" method="POST">
+                <button type="submit" class="bg-red-500 p-2 text-white rounded px-4 py-2">
+                  <i class="fa fa-trash mr-1"></i>Delete</button>
+              </form>
+
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
   </div>
 </div>
 
