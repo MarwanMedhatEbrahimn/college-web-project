@@ -2,11 +2,19 @@
   <div>
     <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
       <div class="flex items-center justify-between">
-        <h1 class="text-3xl font-bold">Users</h1>
-        <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/users/add">
-          <i class="fa fa-add"></i>
-          Add
-        </a>
+        <div class="">
+          <input type="text" id="searchInput" class="search" placeholder="Enter search term...">
+        </div>
+        <div class="">
+          <button class="px-4 py-2 bg-green-500 text-white rounded shadow mr-3" onclick="edit()" id="edit" value="<%=users[0].Edit%>" style="cursor: pointer; border: none;">
+            <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i>
+            Can Edit
+          </button>
+          <a class="px-4 py-2 bg-green-500 text-white rounded shadow" href="/users/add">
+            <i class="fa fa-add"></i>
+            Add
+          </a>
+        </div>
       </div>
       <div>
         <table class="table w-full table-auto min-w-full text-left text-sm font-light bg-white rounded shadow">
@@ -20,8 +28,7 @@
               <th scope="col" class="px-6 py-4">Actions</th>
             </tr>
           </thead>
-          <tbody>
-
+          <tbody id="body">
             <% users.forEach((user, idx)=> { %>
               <tr class="border-b dark:border-neutral-500">
                 <td class="whitespace-nowrap px-6 py-4 font-medium">
@@ -72,5 +79,105 @@
     </div>
   </div>
 
+
+  <script>
+    
+    const input = document.getElementById('searchInput');
+    input.addEventListener('input',async function() {
+        const name = input.value
+        const tbody = document.getElementById("body") 
+        const response = await fetch('/search', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name: name })
+          });
+          if (response.ok) { 
+              tbody.innerHTML = ""
+              data = await response.json()
+              var users = data.users
+              var html="";
+              users.forEach((user, idx)=> { 
+                          html+='<tr class="border-b dark:border-neutral-500">'
+                              + '<td class="whitespace-nowrap px-6 py-4 font-medium">'
+                              + '<a href="/users/'+user.id+'">'
+                              + (idx + 1)
+                              + '</a> </td>'
+                              + '<td class="whitespace-nowrap px-6 py-4 ">'
+                              + '<span class="text-xs rounded bg-gray-300 text-gray-800 font-bold px-2 py-1 ">'
+                              + user.type
+                              + '</span>'
+                              + '</td>'
+                              + '<td class="whitespace-nowrap px-6 py-4">'
+                              + user.name 
+                              + '</td>'
+                              + '<td class="whitespace-nowrap px-6 py-4">'
+                              + user.email
+                              + '</td>'
+                          if (user.isDoctor) { 
+                              html += '<td class="whitespace-nowrap px-6 py-4 text-center">'
+                              + '<a class="text-blue-500 text-center underline" href="/admin/doctors/modify/<%= user.id %>">'
+                              + user.subjects.length
+                              + '</a> </td>'
+                          }
+                          else { 
+                              html += '<td class="whitespace-nowrap px-6 py-4 text-center">'
+                              + '</td> '
+                          }
+                          html+= '<td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">'
+                              + '<a class="bg-green-500 p-2 text-white rounded px-4 py-2" href="/users/<%= user.id %>"><iclass="fa fa-eye mr-1"></i>View</a>'
+                              + '<a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/users/edit/<%= user.id %>"><i class="fa fa-pen mr-1"></i> Edit</a>'
+                              + '<form action="/users/delete/<%= user.id %>" method="POST">'
+                              + '<button type="submit" class="bg-red-500 p-2 text-white rounded px-4 py-2">'
+                              + ' <i class="fa fa-trash mr-1"></i>Delete</button>'
+                              + '</form>'
+                              + '</td> </tr>'
+                          })
+              tbody.innerHTML = html
+          } else {
+              console.log('Error in Search', response.statusText);
+          }
+      });
+      
+      window.onload = inStart()
+
+      function inStart(){
+          var btn_edit = document.getElementById("edit")
+          if(btn_edit.value=="true"){
+            btn_edit.innerHTML='<i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Can Edit'
+            btn_edit.style.backgroundColor="#10B981"
+          }
+          else{
+            btn_edit.innerHTML=' <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Can\'t Edit'
+            btn_edit.style.backgroundColor="#EF4444"
+          }
+
+        }
+
+        async function edit(){
+          var btn_edit = document.getElementById("edit")
+          if(btn_edit.value=="true"){
+            btn_edit.innerHTML=' <i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Can\'t Edit'
+            btn_edit.style.backgroundColor="#EF4444"
+            const response = await fetch('/CanEdit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ edit: false })
+            });
+            btn_edit.value="false"
+          }
+          else{
+            btn_edit.innerHTML='<i class="fa-regular fa-pen-to-square" style="color: #ffffff;"></i> Can Edit'
+            btn_edit.style.backgroundColor="#10B981"
+            const response = await fetch('/CanEdit', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ edit: true })
+            });
+            btn_edit.value="true"
+          }
+          console.log(btn_edit.value)
+      }
+
+  </script>
 
   <%- include('../layout/footer.ejs') %>

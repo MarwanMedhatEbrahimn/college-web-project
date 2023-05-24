@@ -1,0 +1,133 @@
+<%- include('../layout/header.ejs') %>
+
+<div class="">
+  <input type="text" value="<%=id%>" hidden id="id">
+    <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+      <div class="flex items-center justify-between">
+        <div class="">
+          <input type="text" id="searchStudent" class="search" placeholder="Enter search term...">
+        </div>
+        <form action="/EndTerm/<%=id%>" method="post" >
+            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-700">
+            <i class="fa fa-add"></i> EndTerm </button>
+        </form>
+      </div>
+      <div class=" bg-white rounded shadow">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr>
+              <th scope="col" class="px-6 py-4">#</th>
+              <th scope="col" class="px-6 py-4">Name</th>
+              <th scope="col" class="px-6 py-4">Academic Number</th>
+              <th scope="col" class="px-6 py-4">Degree</th>
+              <th scope="col" class="px-6 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="body">
+
+            <% Students.forEach((Student, idx)=> { %>
+              <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                  <%= idx + 1 %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= Student.user.name %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%= Student.user.academicNumber %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4" id="la<%=Student.id%>">
+                    <%=Student.degree%>
+                  </td>
+                <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+                    <div class="mb-4">
+                        <label for="degree" class="sr-only">Degree</label>
+                        <input type="number" name="degree" id="<%=Student.id%>" placeholder="degree"
+                            class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="<%=Student.degree%>"
+                            onfocusout="updateDegree('<%=Student.id%>','<%=idx%>')">
+                    </div>
+
+                </td>
+              </tr>
+              <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="">
+        <a href="/Doctor/subject/<%=id%>" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px;  color:white; font-size: 20px;">Back</a>
+      </div>
+    </div>
+  </div>
+
+<script>
+  async function updateDegree(State_id,index) {
+    var value =document.getElementById(State_id).value
+    if(value>=0&&value<=100){
+        document.getElementById("la"+State_id).innerText=value
+        const response = await fetch('/update-degree', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: State_id, degree: value })
+        });
+        if (response.ok) {
+            console.log('Degree updated successfully!');
+        } else {
+            console.log('Error updating degree:', response.statusText);
+        }
+    }
+    else{
+        document.getElementById(State_id).value=document.getElementById("la"+State_id).innerText
+    }
+    
+  }
+  const input= document.getElementById('searchStudent');
+  input.addEventListener('input',async function() {
+      console.log("asd")
+      const name = input.value
+      const tbody = document.getElementById("body") 
+      var id = document.getElementById('id').value;
+      const response = await fetch('/Student_search/'+id, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name })
+        });
+        if (response.ok) { 
+            tbody.innerHTML = ""
+            data = await response.json()
+            console.log(data)
+            var Students = data.Students
+            var html=""; 
+            Students.forEach((Student, idx) => {
+              html += '<tr class="border-b dark:border-neutral-500">'
+                     + '<td class="whitespace-nowrap px-6 py-4 font-medium">'
+                     + (idx+1)
+                     + '</td>'
+                     + '<td class="whitespace-nowrap px-6 py-4">'   
+                     + Student.user.name
+                     + '</td>'
+                     + '<td class="whitespace-nowrap px-6 py-4">'
+                     + Student.user.academicNumber
+                     + '</td>'
+                     + '<td class="whitespace-nowrap px-6 py-4" id="la'+Student.id+'">'
+                     + Student.degree
+                     + '</td>'
+                     + '<td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">'
+                     + '<div class="mb-4">'
+                     + '<label for="degree" class="sr-only">Degree</label>'
+                     + '<input type="number" name="degree" id="'+Student.id+'" placeholder="degree"'
+                     + 'class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="'+Student.degree+'"'
+                     + 'onfocusout="updateDegree(\''+Student.id+'\',\''+idx+'\')">'
+                     + '</div>'
+                     + '</td>'
+                     + '</tr>';
+            });      
+            tbody.innerHTML = html
+        } else {
+            console.log('Error in Search', response.statusText);
+        }
+      })
+
+</script>
+
+<%- include('../layout/footer.ejs') %>

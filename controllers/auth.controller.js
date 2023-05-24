@@ -40,7 +40,7 @@ router.post('/login', async (req, res, next) => {
     if (isSamePassword) {
       delete user.password
       req.session.user = user
-      res.redirect('/users')
+      res.redirect('/')
     } else {
       res.render('pages/login', {
         error: true,

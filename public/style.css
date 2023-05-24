@@ -1,0 +1,17 @@
+
+.transform:hover {
+    transform: scale(1.009);
+}
+
+.search {
+    padding: 10px;
+    width: 300px;
+    border-radius: 20px;
+}
+.search:active{
+    border: none;
+}
+
+#edit:active{
+    border: none;
+}
