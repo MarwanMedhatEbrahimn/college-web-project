@@ -9,7 +9,7 @@ const doctorController = require('../controllers/Doctor.controller')
 const StudentController= require("../controllers/student.controller")
 const middlewares = require('../middlewares/auth')
 const adminR = require('./adminRouter')
-let {checkSignInAsAdmin , checkSignInAsDoctor, checkSignInAsStudent, checkSign} = middlewares
+let {checkSign} = middlewares
 
 
 router.use(authController)

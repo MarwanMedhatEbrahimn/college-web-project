@@ -24,7 +24,7 @@ async function search (name){
   return users
 }
 
-router.post('/search',isAdmin,async(req,res)=>{
+router.post('/search',isAdmin,async (req,res)=>{
   try {
     const users = await search(req.body.name)
     res.set('Access-Control-Allow-Origin', '*');
@@ -35,8 +35,6 @@ router.post('/search',isAdmin,async(req,res)=>{
   }
 
 });
-
-
 
 router.get('/users',isAdmin, async (req, res, next) => {
   try {
@@ -194,6 +192,18 @@ router.get('/users/Show_Subject/:id',isAdmin, async (req, res, next) => {
     })
   } catch (error) {
     next(error)
+  }
+})
+
+router.post('/CanEdit',isAdmin,async (req,res)=>{
+  try {
+    const {edit} = req.body
+    await prisma.User.updateMany({data:{Edit:edit}})
+    return res.json({ msg: "Done" })
+
+  } catch (error) {
+    console.log(error)
+    return res.json({ msg: "error" })
   }
 })
 

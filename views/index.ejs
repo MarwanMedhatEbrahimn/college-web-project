@@ -5,36 +5,45 @@
   <% if (user.isAdmin) { %>
       <h1 class="text-xl font-bold">Home</h1>
   <% } %>
+
   <% if (user.isDoctor) { %>
-    <div class="flex m-5 px-24">
+    <div class="flex flex-wrap">
       <% subjects.forEach((subject, idx)=> { %>
-      <div class="shadow-xl hover:shadow-2xl mr-16 rounded-md bg-white ">
-          <img src="/img/Subject.jpeg" alt="" height="225px" width="225px">
-          <div class="rounded-md p-2">
-              <h2 class="font-bold mt-2 text-xl ml-2"><%=subject.name%></h2>
-              <% if (user.isStudent) { %>
-                <h2 class="text-gray-500 mt-2 text-l ml-2"><%=subject.subject.User.name%></h2>
-              <% }%>
-              <a href="/Doctor/subject/<%=subject.id%>" class="p-2 bg-blue-600 block text-white rounded-lg mt-3 hover:bg-blue-800 ">Show Cousre</a>
-          </div>
-          <% })%>
-      </div>
+        <div class="flex my-5 mx-10">
+            <div class="shadow-xl hover:shadow-2xl mr-16 rounded-md bg-white ">
+                <img src="/img/Subject.jpeg" alt="" height="225px" width="225px">
+                <div class="rounded-md p-2">
+                    <h2 class="font-bold mt-2 text-xl ml-2"><%=subject.name%></h2>
+                    <% if (user.isStudent) { %>
+                      <h2 class="text-gray-500 mt-2 text-l ml-2"><%=subject.subject.User.name%></h2>
+                    <% }%>
+                    <a href="/Doctor/subject/<%=subject.id%>" class="p-2 bg-blue-600 block text-white rounded-lg mt-3 hover:bg-blue-800 ">Show Cousre</a>
+                </div>
+            </div>
+        </div>
+      <% })%>
     </div>
   <% } %>
+
+  
   <% if (user.isStudent) { %>
-    <div class="flex m-5 px-24">
+    <div class="flex flex-wrap">
       <% subjects.forEach((subject, idx)=> { %>
-      <div class="shadow-xl hover:shadow-2xl mr-16 rounded-md bg-white ">
-          <img src="/img/Subject.jpeg" alt="" height="225px" width="225px">
-          <div class="rounded-md p-2">
-              <h2 class="font-bold mt-2 text-xl ml-2"><%=subject.subject.name%></h2>
-              <% if (user.isStudent) { %>
-                <h2 class="text-gray-500 mt-2 text-l ml-2"><%=subject.subject.User.name%></h2>
-              <% }%>
-              <a href="/Subject/<%=subject.subject.id%>" class="p-2 bg-blue-600 block text-white rounded-lg mt-3 hover:bg-blue-800 ">Show Cousre</a>
-          </div>
-          <% })%>
-      </div>
+        <div class="flex mx-10 my-5">
+            <div class="shadow-xl hover:shadow-2xl mr-16 rounded-md bg-white ">
+              <img src="/img/Subject.jpeg" alt="" height="225px" width="225px">
+              <div class="rounded-md p-2">
+                  <h2 class="font-bold mt-2 text-xl ml-2"><%=subject.subject.name%></h2>
+                  <% if (subject.subject.User) { %>
+                    <h2 class="text-gray-500 mt-2 text-l ml-2"><%=subject.subject.User.name%></h2>
+                  <% } else {%>
+                    <h2 class="text-gray-500 mt-2 text-l ml-2 ">NONE</h2>
+                  <%}%>
+                  <a href="/Subject/<%=subject.subject.id%>" class="p-2 bg-blue-600 block text-white rounded-lg mt-3 hover:bg-blue-800 ">Show Cousre</a>
+              </div>
+            </div>
+        </div>
+      <% })%>
     </div>
   <% } %>
   

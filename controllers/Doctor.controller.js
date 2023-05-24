@@ -81,7 +81,29 @@ router.get("/doctor/Student_registered/:id",isDoctor,async (req,res)=>{
     next(error)
   }
 });
+router.post('/Student_search/:id',isDoctor,async (req,res)=>{
+  try {
+    let {name} = req.body 
+    var Students = await prisma.stateOFsub.findMany({
+      where:{subject_id:Number(req.params.id),state:"registered"},
+      include:{user:true}
+    })
+    Students = Students.filter(element=>{
+      if(element.user.name.includes(name)){
+        return element;
+      }
+        
+    })
+    
+    res.set('Access-Control-Allow-Origin', '*');
+    return res.json({ Students: Students })
 
+  } catch (error) {
+    console.log(error)
+    return res.json({ Students:{} })
+  }
+
+});
 
 router.post("/update-degree",isDoctor,async (req,res)=>{
   try {

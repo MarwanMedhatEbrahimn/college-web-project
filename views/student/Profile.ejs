@@ -1,47 +1,33 @@
 <%- include('../layout/header.ejs') %>
     <div class="contianer mx-auto py-5  w-3/5 ">
-        <a href="/users" class="bg-blue-500 text-white px-4 py-2 rounded">Back</a>
         <div class="bg-white rounded p-5 shadow my-3">
             <div class="p-5">
                 <div class="flex flex-col gap-3">
-                    <div class="">
-                        <h3 class="text-lg">Type</h3>
-                        <p class=" text-gray-700">
-                            <%= user.type %>
-                        </p>
-                    </div>
-                    <% if (user.type==="Student" ) { %>
                         <div class="">
-                            <h3 class="text-lg">Academic Number</h3>
-                            <p class=" text-gray-700">
-                                <%= user.academicNumber %>
-                            </p>
+                            <h3 class="text-lg">Academic Number:  
+                                <span class=" text-gray-500 ml-2">
+                                    <%= user.academicNumber %>
+                                </span>
+                             </h3>
                         </div>
-                        <% } %>
                             <div class="">
-                                <h3 class="text-lg">Name</h3>
-                                <p class=" text-gray-700">
+                                <h3 class="text-lg">Name:
+                                    <span class=" text-gray-500 ml-2">
                                     <%= user.name %>
-                                </p>
+                                    </span>
+                                 </h3>
+
                             </div>
                             <div class="">
-                                <h3 class="text-lg">Email</h3>
-                                <p class=" text-gray-700">
+                                <h3 class="text-lg">Email:
+                                    <span class=" text-gray-500 ml-2">
                                     <%= user.email %>
-                                </p>
-                            </div>
-                            <div class="">
-                                <h3 class="text-lg">Subjects</h3>
-                                <ul class="list-disc list-inside ml-3">
-                                    <% user.subjects.forEach(subject=> { %>
-                                         <li> <%= subject.name %> </li> 
-                                    <% }) %>
-                                </ul>
+                                    </span>
+                                 </h3>
                             </div>
                 </div>
             </div>
         </div>
-        <% if (user.isStudent) { %>
             <% if (registered.length!=0) { %>
                 <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
                     <div class="flex items-center justify-between">
@@ -182,7 +168,6 @@
                     </div>
                 </div>
             <% } %>
-          <% } %>
     </div>
 
 

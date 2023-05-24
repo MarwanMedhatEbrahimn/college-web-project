@@ -20,6 +20,7 @@ model User {
   department     Department? @relation(fields: [departmentId], references: [id])
   departmentId   Int?
   stateOFsub     stateOFsub[]
+  Edit           Boolean @default(true)
 }
 model stateOFsub {
   id             Int         @id @default(autoincrement())
