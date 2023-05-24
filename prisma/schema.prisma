@@ -23,6 +23,7 @@ model User {
   Edit           Boolean @default(true)
 }
 model stateOFsub {
+  
   id             Int         @id @default(autoincrement())
   degree         Float?     @default(0)
   name           String?
