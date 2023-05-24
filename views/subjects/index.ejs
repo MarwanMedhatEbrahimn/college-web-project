@@ -31,24 +31,15 @@
             <td class="whitespace-nowrap px-6 py-4">
               <%= subject.code %>
             </td>
-            <td class="whitespace-nowrap px-6 py-4 flex items-center gap-3">
+            <td class="whitespace-nowrap py-4 flex items-center gap-3">
               <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
                 href="/subjects/Show_Students/<%= subject.id %>">
                 <i class="fa fa-eye mr-1"></i>Students
-              </a>
-              <a class="bg-green-500 p-2 text-white rounded px-4 py-2"
-                href="/subjects/Show_Departments/<%= subject.id %>">
-                <i class="fa fa-eye mr-1"></i>Departments
               </a>
 
               <a class="bg-blue-500 p-2 text-white rounded px-4 py-2" href="/subjects/Update/<%= subject.id %>">
                 <i class="fa fa-pen mr-1"></i> Edit
               </a>
-
-              <form action="/subjects/delete/<%= subject.id %>" method="POST">
-                <button type="submit" class="bg-red-500 p-2 text-white rounded px-4 py-2">
-                  <i class="fa fa-trash mr-1"></i>Delete</button>
-              </form>
 
             </td>
           </tr>

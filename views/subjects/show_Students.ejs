@@ -24,17 +24,22 @@
                   <%= idx + 1 %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
-                  <%= Student.name %>
+                  <%= Student.user.name %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
-                  <%= Student.email %>
+                  <%= Student.user.email %>
                 </td>
                 <td class="whitespace-nowrap px-6 py-4">
-                  <%= Student.academicNumber %>
+                  <%= Student.user.academicNumber %>
                 </td>
-                <td class="whitespace-nowrap px-6 py-4">
-                  <%= department.name %>
-                </td>
+                <%if(Student.user.department){%>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <%= Student.user.department.name %>
+                  </td>
+                  <%} else {%>
+                    <td class="whitespace-nowrap px-6 py-4">
+                    </td>
+                  <%}%>
               </tr>
               <% }) %>
 

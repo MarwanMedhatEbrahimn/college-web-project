@@ -47,7 +47,7 @@ model Subject {
   userId Int?
   stateOfsub stateOFsub[]
   Files Files[]
-  dependencies String?
+  dependencies String? @default("")
 }
 
 model Department {
