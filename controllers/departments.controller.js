@@ -74,6 +74,7 @@ router.get('/departments/Update/:id',isAdmin, async (req, res, next) => {
     next(error)
   }
 })
+
 router.post('/departments/Update/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)

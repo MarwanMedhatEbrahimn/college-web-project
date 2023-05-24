@@ -11,7 +11,6 @@ const middlewares = require('../middlewares/auth')
 const adminR = require('./adminRouter')
 let {checkSign} = middlewares
 
-
 router.use(authController)
 router.use(homeController, checkSign)
 router.use('/admin', checkSign, adminR)

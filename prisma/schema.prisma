@@ -33,6 +33,16 @@ model stateOFsub {
   user      User    @relation(fields: [user_Id], references: [id])
   subject   Subject? @relation(fields: [subject_id], references: [id])
 }
+model stateOFsub {
+  id             Int         @id @default(autoincrement())
+  degree         String?
+  name           String?
+  //succeeded, failure, registered
+  state          String? 
+  user_Id Int
+  subject_id    Int
+  subject   Subject? @relation(fields: [subject_id], references: [id])
+}
 
 model Subject {
   id   Int     @id @default(autoincrement())
