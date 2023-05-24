@@ -21,3 +21,12 @@ jobs:
         run: npm install
       - name: Run test
         run: npm test
+     
+      - name: set up prisma
+        run: npx prisma generate
+  
+      - name: Build project
+        run: npm run build
+  
+      - name:  Deploy
+        run: npm run deploy 
