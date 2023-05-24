@@ -21,6 +21,7 @@ model User {
   departmentId   Int?
   stateOFsub     stateOFsub[]
   Edit           Boolean @default(true)
+  
 }
 model stateOFsub {
   
