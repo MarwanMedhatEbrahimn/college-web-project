@@ -9,7 +9,7 @@
                 <% if (user.isStudent) { %>
                     <div class="mb-4">
                         <label for="email" class="sr-only">Academic Number</label>
-                        <input type="text" name="academic_number" id="academic_number" placeholder="Academic Number"
+                        <input type="text" name="code" id="code" placeholder="code"
                             class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="<%= user.academicNumber %>">
                     </div>
                     <% } %>
@@ -22,7 +22,7 @@
 
                         <div class="mb-4">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="text" name="email" id="email" placeholder="Email" value="<%=user.email%>"
+                            <input type="text" name="departmentId" id="departmentId" placeholder="departmentId" value="<%=user.email%>"
                                 class="bg-gray-100 border-2 w-full p-4 rounded-lg">
                         </div>
 

@@ -16,22 +16,30 @@ model User {
   isAdmin        Boolean?
   isDoctor       Boolean?
   isStudent      Boolean?
-  subjects        Subject[]
+  subjects       Subject[]
   department     Department? @relation(fields: [departmentId], references: [id])
   departmentId   Int?
+}
+model stateOFsub {
+  id             Int         @id @default(autoincrement())
+  degree         String?
+  name           String?
+  //succeeded, failure, registered
+  state          String? 
+  user_Id Int
+  subject_id    Int
+  subject   Subject? @relation(fields: [subject_id], references: [id])
 }
 
 model Subject {
   id   Int     @id @default(autoincrement())
   name String
   code String?
-
   departmentId Int?
   department   Department? @relation(fields: [departmentId], references: [id])
-
   User   User? @relation(fields: [userId], references: [id])
   userId Int?
-
+  stateOfsub stateOFsub[]
   dependencies String?
 }
 
