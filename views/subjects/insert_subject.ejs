@@ -18,12 +18,42 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="code" class="sr-only">Departments</label>
-                    <input type="text" name="code" id="code" placeholder="Code"
-                        class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                    <select id="Department"  name="Department"  class="bg-gray-100 border-2 w-full p-4">
+                        <% Departments.forEach((Department, idx)=> { %>
+                          <option value="<%=Department.id%>"><%=Department.name%></option>
+                        <% }) %>
+                      </select>  
                 </div>
 
+                <div class="mb-4">
+                    <div>
+                        <table class="table w-full table-auto min-w-full text-left text-sm font-light bg-white rounded shadow">
+                          <thead class="border-b font-medium dark:border-neutral-500">
+                            <tr>
+                              <th scope="col" class="px-6 py-4">#</th>
+                              <th scope="col" class="px-6 py-4">Name</th>
+                              <th scope="col" class="px-6 py-4">Code</th>
+                              <th scope="col" class=" py-4">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody id="body">
+                          </tbody>
+                        </table>
+                      </div>
+                </div>
+                <div class="mb-4">
+                    <select id="Subjects"  class="bg-gray-100 border-2 w-full p-4" onchange="Add_subject()">
+                        <option value="" selected disabled>Select Subject</option>
+                        <% subjects.forEach((sub, idx)=> { %>
+                            <option value="<%=sub.name%>"><%=sub.name%></option>
+                        <% }) %>
+                    </select>
+                </div>
+                
 
+                <input type="text" value="<%=JSON.stringify(subjects)%>" id="Not_Use" hidden>
+                <input type="text" name="Use" value="<%=JSON.stringify([])%>" id="Use" hidden>
+                <input type="text" name="dependencies" value="" id="dependencies" hidden>
                 <div>
                     <button type="submit" class="bg-green-500 text-white px-4 py-3 rounded font-medium ">Create</button>
                 </div>
@@ -32,5 +62,92 @@
         <a href="/subjects" class="bg-gray-700 text-white px-4 py-2 rounded" style="color:white; font-size: 20px;">Back</a>
 
     </div>
+
+
+
+<script>
+    function build_view(Subjects,SubR){
+        var html = '<option value="" selected disabled>Select Subject</option>'
+        Subjects.forEach((sub, idx)=> { 
+            html += '<option value="'+sub.name+'">'+sub.name+'</option>'
+        })
+        document.getElementById("Subjects").innerHTML=""
+        document.getElementById("Subjects").innerHTML=html
+
+        //body
+        var body = document.getElementById("body")
+        var hBody = ""
+        SubR.forEach((subject, idx)=> {
+        hBody +='<tr class="border-b dark:border-neutral-500">'
+                +'<td class="whitespace-nowrap px-6 py-4 font-medium">'
+                +(idx+1)
+                +'</td>'
+                +'<td class="whitespace-nowrap px-6 py-4 ">'
+                +subject.name
+                +'</td>'
+                +'<td class="whitespace-nowrap px-6 py-4">'
+                +subject.code
+                +'</td>'
+        hBody +='<td class="whitespace-nowrap px-6 py-4 text-center">'
+                +'<a class="text-blue-500 text-center underline" style="cursor: pointer;" onclick="delete_subject(\''+subject.name+'\')">'
+                +'<i class="fa-regular fa-xmark" style="color: #ff0000;"></i>'
+                +'</a></td>'
+        hBody +='</tr>'    
+        })
+        body.innerHTML=hBody
+
+      }
+
+    function Add_subject(){
+        var inputNotUse = document.getElementById("Not_Use")
+        var notused = inputNotUse.value     
+        notused = JSON.parse(notused)
+        var inputUse = document.getElementById("Use")
+        var used = inputUse.value
+        used = JSON.parse(used)
+        var selected = document.getElementById("Subjects")
+        var subject
+        notused = notused.filter(item=>{
+            if(item.name==selected.value){
+                subject = item
+            }
+            else {
+                return item
+            }
+        })
+        if(subject)
+            used.push(subject)
+            inputNotUse.value = JSON.stringify(notused) 
+            inputUse.value = JSON.stringify(used)
+        build_view(notused,used)
+    }
+
+
+    function delete_subject(subjectName){
+            var inputNotUse = document.getElementById("Not_Use")
+            var notused = inputNotUse.value     
+            notused = JSON.parse(notused)
+            var inputUse = document.getElementById("Use")
+            var used = inputUse.value
+            used = JSON.parse(used)
+            var subject
+            used = used.filter(item=>{
+                if(item.name==subjectName){
+                    subject = item
+                }
+                else {
+                    return item
+                }
+            })
+            if(subject){
+                notused.push(subject)
+                inputNotUse.value = JSON.stringify(notused) 
+                inputUse.value = JSON.stringify(used)
+            }       
+            build_view(notused,used)
+        }
+</script>
+
+
 
 <%- include('../layout/footer.ejs') %>
