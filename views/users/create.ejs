@@ -30,6 +30,14 @@
                         class="bg-gray-100 border-2 w-full p-4 rounded-lg" v>
                 </div>
 
+                <div class="mb-4" x-show="type == 'Student' || type == 'Doctor'">
+                    <select id="Department"  name="departmentId"  class="bg-gray-100 border-2 w-full p-4">
+                        <% Departments.forEach((Department, idx)=> { %>
+                          <option value="<%=Department.id%>"><%=Department.name%></option>
+                        <% }) %>
+                      </select>  
+                </div>
+
 
                 <div class="mb-4">
                     <h3 class="font-bold text-lg  ">Types</h3>

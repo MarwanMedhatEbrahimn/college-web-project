@@ -5,24 +5,24 @@
         <h1 class="text-3xl font-bold mt-5">Edit User</h1>
         <div class="bg-white p-5 rounded bg-white shadow my-3">
 
-            <form class="mt-2" action="/users/update/<%= user.id %>" method="post">
-                <% if (user.isStudent) { %>
+            <form class="mt-2" action="/users/update/<%= userView.id %>" method="post">
+                <% if (userView.isStudent) { %>
                     <div class="mb-4">
                         <label for="email" class="sr-only">Academic Number</label>
-                        <input type="text" name="code" id="code" placeholder="code"
-                            class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="<%= user.academicNumber %>">
+                        <input type="text" name="academic_number" id="academic_number" placeholder="Academic Number"
+                            class="bg-gray-100 border-2 w-full p-4 rounded-lg" value="<%= userView.academicNumber %>">
                     </div>
                     <% } %>
 
                         <div class="mb-4">
                             <label for="email" class="sr-only">Name</label>
-                            <input type="text" name="name" id="name" placeholder="Name" value="<%=user.name%>"
+                            <input type="text" name="name" id="name" placeholder="Name" value="<%=userView.name%>"
                                 class="bg-gray-100 border-2 w-full p-4 rounded-lg">
                         </div>
 
                         <div class="mb-4">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="text" name="departmentId" id="departmentId" placeholder="departmentId" value="<%=user.email%>"
+                            <input type="text" name="email" id="email" placeholder="email" value="<%=userView.email%>"
                                 class="bg-gray-100 border-2 w-full p-4 rounded-lg">
                         </div>
 
@@ -31,6 +31,22 @@
                             <input type="password" name="new_password" id="new_password" placeholder="New Password"
                                 class="bg-gray-100 border-2 w-full p-4 rounded-lg" v>
                         </div>
+
+                        <% if (userView.isStudent||userView.isDoctor) { %>
+                            <div class="mb-4">
+                                <select id="Department"  name="departmentId"   class="bg-gray-100 border-2 w-full p-4">
+                                    <% Departments.forEach((Department, idx)=> { %>
+                                        <%if(userView.departmentId!=Department.id){%>
+                                            <option value="<%=Department.id%>"><%=Department.name%></option>
+                                        <%}else{%>
+                                            <option value="<%=Department.id%>" selected><%=Department.name%></option>
+                                            
+                                        <%}%>
+                                    <% }) %>
+                                </select>  
+                            </div>
+                        <% } %>
+                        
 
 
                         <div>
