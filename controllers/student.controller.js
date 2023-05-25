@@ -104,7 +104,7 @@ router.post("/RegusterToSubject",isStudent, async function (req, res) {
 
       if(flag==1 && element.dependencies){
         const dependencies = element.dependencies.split(",")
-        for(i=0;i<dependencies.length;i++){
+        for(i=0;i<dependencies.length-1;i++){
           flag=0
           for(j=0;j<succeededSub.length;j++){
             if(succeededSub[j].subject.name==dependencies[i]){     
@@ -159,7 +159,7 @@ router.post("/DeregisteredToSubject",isStudent, async function (req, res) {
 
       if(flag==1 && element.dependencies){
         const dependencies = element.dependencies.split(",")
-        for(i=0;i<dependencies.length;i++){
+        for(i=0;i<dependencies.length-1;i++){
           flag=0
           for(j=0;j<succeededSub.length;j++){
             if(succeededSub[j].subject.name==dependencies[i]){     
