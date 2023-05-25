@@ -44,7 +44,7 @@ router.get('/Student/register_Subject',isStudent,async(req,res,next)=>{
 
       if(flag==1 && element.dependencies){
         const dependencies = element.dependencies.split(",")
-        for(i=0;i<dependencies.length;i++){
+        for(i=0;i<dependencies.length-1;i++){
           flag=0
           for(j=0;j<succeededSub.length;j++){
             if(succeededSub[j].subject.name==dependencies[i]){     
