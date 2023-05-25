@@ -47,7 +47,8 @@ router.get('/users',isAdmin, async (req, res, next) => {
 
 router.get('/users/add',isAdmin, async (req, res) => {
   try {
-    res.render('users/create', { active: req.active })
+    const Departments = await prisma.Department.findMany()
+    res.render('users/create', { Departments:Departments, active: req.active })
   } catch (error) {
     next(error)
   }
@@ -55,13 +56,14 @@ router.get('/users/add',isAdmin, async (req, res) => {
 
 router.post('/users/create',isAdmin, async (req, res, next) => {
   try {
-    let { academic_number, name, email, password, type } = req.body
+    let { academic_number, name, email, password, type, departmentId } = req.body
     let hashed = await bcrypt.hash(password, saltRounds)
     let user = {
       academicNumber: academic_number,
       name,
       email,
-      password: hashed
+      password: hashed,
+      departmentId: Number(departmentId)
     }
     user = mapUserType(user, type)
      
@@ -76,19 +78,27 @@ router.post('/users/create',isAdmin, async (req, res, next) => {
 router.post('/users/update/:id',isAdmin, async (req, res, next) => {
   try {
     let userId = Number(req.params.id)
-    let { academic_number, name, email, new_password, type } = req.body
+    let { academic_number, name, email, new_password, type, departmentId } = req.body
+    console.log(departmentId)
     let user = {
       academicNumber: academic_number,
       name,
       email,
+      departmentId: Number(departmentId)
     }
     if(new_password != "") {
       let hashed = await bcrypt.hash(new_password, saltRounds)
       user.password = hashed
     }
     user = mapUserType(user, type)
-    await prisma.user.update({ data: { ...user }, where: {id: userId} })
-    res.redirect('/users/' + userId)
+    await prisma.user.update({ data: { 
+      name: user.name,
+      academicNumber: user.academicNumber,
+      email: user.email,
+      departmentId: user.departmentId
+
+     }, where: {id: userId} })
+    res.redirect('/users')
   } catch (error) {
     console.log(error)
     next(error)
@@ -96,7 +106,7 @@ router.post('/users/update/:id',isAdmin, async (req, res, next) => {
 })
 router.get('/users/:id',isAdmin, async (req, res) => {
   try {
-    const user = await prisma.user.findFirst({
+    const userView = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id)
       },
@@ -139,8 +149,8 @@ router.get('/users/:id',isAdmin, async (req, res) => {
         }
       }
     })
-    user.type = getUserType(user)
-    res.render('users/show', { active: req.active, user: user, registered: registered, succeeded: succeeded, failure: failure })
+    userView.type = getUserType(userView)
+    res.render('users/show', { active: req.active, userView: userView, registered: registered, succeeded: succeeded, failure: failure })
   } catch (error) {
     console.log(error)
     next(error)
@@ -150,14 +160,16 @@ router.get('/users/:id',isAdmin, async (req, res) => {
 
 router.get('/users/edit/:id',isAdmin, async (req, res) => {
   try {
-    const user = await prisma.user.findFirst({
+    const userView = await prisma.user.findFirst({
       where: {
         id: Number(req.params.id)
       }
     })
-    user.type = getUserType(user)
-    res.render('users/edit', { active: req.active, user: user })
+    const Departments = await prisma.Department.findMany({})
+    userView.type = getUserType(user)
+    res.render('users/edit', { active: req.active, userView: userView, Departments:Departments })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 })
