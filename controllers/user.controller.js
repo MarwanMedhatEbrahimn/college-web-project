@@ -95,6 +95,7 @@ router.post('/users/update/:id',isAdmin, async (req, res, next) => {
       name: user.name,
       academicNumber: user.academicNumber,
       email: user.email,
+      password:user.password,
       departmentId: user.departmentId
 
      }, where: {id: userId} })
