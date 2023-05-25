@@ -1,8 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const prisma = require('../prisma/client')
+const {isAdmin} = require("../middlewares/auth")
 
-router.get('/departments', async (req, res, next) => {
+router.get('/departments',isAdmin, async (req, res, next) => {
   try {
     const departments = await prisma.Department.findMany({}) 
     res.render('departments/index',{departments : departments, active: req.active})
@@ -11,7 +12,7 @@ router.get('/departments', async (req, res, next) => {
   }
 })
 
-router.post('/departments/delete/:id', async (req, res, next) => {
+router.post('/departments/delete/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const flag = await prisma.Department.delete({where:{id:id}}) 
@@ -21,7 +22,7 @@ router.post('/departments/delete/:id', async (req, res, next) => {
   }
 })
 
-router.get('/departments/Show_Subjects/:id', async (req, res, next) => {
+router.get('/departments/Show_Subjects/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const Subjects = await prisma.Subject.findMany({where:{departmentId:id}}) 
@@ -31,7 +32,7 @@ router.get('/departments/Show_Subjects/:id', async (req, res, next) => {
   }
 })
 
-router.get('/departments/Show_Students/:id', async (req, res, next) => {
+router.get('/departments/Show_Students/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const Students = await prisma.User.findMany({where:{departmentId:id , isStudent:true}})
@@ -42,7 +43,7 @@ router.get('/departments/Show_Students/:id', async (req, res, next) => {
   }
 })
 
-router.get('/department/Insert', async (req, res, next) => {
+router.get('/department/Insert',isAdmin, async (req, res, next) => {
   try {
     res.render('departments/Insert_department',{active: req.active})
   } catch (error) {
@@ -50,7 +51,7 @@ router.get('/department/Insert', async (req, res, next) => {
   }
 })
 
-router.post('/department/Insert', async (req, res, next) => {
+router.post('/department/Insert',isAdmin, async (req, res, next) => {
   try {
     const department= await prisma.department.create({
       data :{
@@ -64,7 +65,7 @@ router.post('/department/Insert', async (req, res, next) => {
   }
 })
 
-router.get('/departments/Update/:id', async (req, res, next) => {
+router.get('/departments/Update/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const department = await prisma.Department.findFirst({where:{id:id}}) 
@@ -73,7 +74,8 @@ router.get('/departments/Update/:id', async (req, res, next) => {
     next(error)
   }
 })
-router.post('/departments/Update/:id', async (req, res, next) => {
+
+router.post('/departments/Update/:id',isAdmin, async (req, res, next) => {
   try {
     const id = parseInt(req.params.id)
     const department = await prisma.Department.update({data:{name:req.body.name,code:req.body.code},where:{id:id}}) 

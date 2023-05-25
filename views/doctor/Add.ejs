@@ -1,0 +1,38 @@
+<%- include('../layout/header.ejs') %>
+    <div class="contianer mx-auto py-5  w-3/5 ">
+        <h1 class="text-3xl font-bold mt-5">Add FIle</h1>
+        <div class="bg-white p-5 rounded bg-white shadow my-3" x-data="{type: 'Student'}">
+
+            <form class="mt-2" action="/Doctor/File/Add/<%=id%>" method="post" enctype="multipart/form-data">
+
+                <div class="mb-4">
+                    <label for="name" class="sr-only">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg">
+                </div>
+
+                <div class="mb-4">
+                    <label for="email" class="sr-only">Description</label>
+                    <textarea name="description" id="description" placeholder="description"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg"></textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="file" class="sr-only">File</label>
+                    <input type="file" name="file" id="file"
+                        class="bg-gray-100 border-2 w-full p-4 rounded-lg" accept=".pdf,.docx">
+                </div>
+
+
+                <div>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-3 rounded font-medium ">Create</button>
+                </div>
+            </form>
+            
+        </div>
+        <div class="">
+            <a href="/Doctor/subject/<%=id%>" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px;  color:white; font-size: 20px;">Back</a>
+          </div>
+    </div>
+
+<%- include('../layout/footer.ejs') %>

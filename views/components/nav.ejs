@@ -22,7 +22,16 @@
           <a href="/"
             class="block py-2 pl-3 pr-4 text-gray-900  <%= active === 'home' ? 'text-blue-800'  : 'text-gray-900' %> rounded hover:text-blue-900">Home</a>
         </li>
-
+        <% if (user.isStudent) { %>
+          <li>
+            <a href="/Student/register_Subject"
+            class="block py-2 pl-3 pr-4  rounded <%= active === 'Register' ? 'text-blue-800'  : 'text-gray-900' %> ">Register</a>
+          </li>
+          <li>
+            <a href="/Student/Profile"
+              class="block py-2 pl-3 pr-4  rounded <%= active === 'Profile' ? 'text-blue-800'  : 'text-gray-900' %> ">Profile</a>
+          </li>
+        <% } %>
       <% if (user.isAdmin) { %>
         <li>
           <a href="/users"

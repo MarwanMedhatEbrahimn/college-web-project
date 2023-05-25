@@ -1,0 +1,154 @@
+<%- include('../layout/header.ejs') %>
+
+    <div class="flex flex-col gap-3 container mx-auto my-10 w-3/5">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold">Files</h1>
+      </div>
+      <div>
+        <table class="table w-full table-auto min-w-full text-left text-sm font-light bg-white rounded shadow">
+          <thead class="border-b font-medium dark:border-neutral-500">
+            <tr id="head">
+              <th scope="col" class="px-6 py-4">#</th>
+              <th scope="col" class="px-6 py-4">Name</th>
+              <th scope="col" class="px-6 py-4">Code</th>
+              <% if (Edit==true) { %>
+                <th scope="col" class=" py-4">Actions</th>
+              <% } %>
+            </tr>
+          </thead>
+          <tbody id="body">
+            <% SubR.forEach((sub, idx)=> { %>
+              <tr class="border-b dark:border-neutral-500">
+                <td class="whitespace-nowrap px-6 py-4 font-medium">
+                    <%= idx + 1 %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 ">
+                    <%=sub.subject.name %>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <%=sub.subject.code %>
+                </td>
+                
+                <% if (Edit==true) { %>
+                  <td class="whitespace-nowrap px-6 py-4 text-center">
+                    <a class="text-blue-500 text-center underline" style="cursor: pointer;" onclick="delete_subject('<%=sub.id%>')">
+                        <i class="fa-regular fa-xmark" style="color: #ff0000;"></i>
+                    </a>
+                  </td>
+                <% } %>
+              </tr>
+              <% }) %>
+
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <% if (Edit==true) { %>
+          <div class="w-full table-auto min-w-full text-left text-sm font-light bg-white rounded shadow" id="AddSubject">
+            <div class="mb-4">
+              <select id="Subjects"  name="Subjects"  class="bg-gray-100 border-2 w-full p-4" onchange="Add_subject()">
+                <option value="" selected disabled>Select Subject</option>
+                <% Subjects.forEach((sub, idx)=> { %>
+                  <option value="<%=sub.id%>"><%=sub.name%></option>
+                <% }) %>
+              </select>         
+            </div>
+          </div>
+        <% } %>
+      </div>
+      <div class="">
+        <a href="/" class="bg-gray-700" style="border-radius: 5px; padding: 5px 10px 5px 10px; color:white; font-size: 20px;">Back</a>
+      </div>
+      <div id="id"></div>
+    </div> 
+    <script>
+
+
+      function build_view(Subjects,SubR,Edit){
+        var html ='<div class="w-full table-auto min-w-full text-left text-sm font-light bg-white rounded shadow">'
+                  + '<div class="mb-4">'
+                  + '<select id="Subjects"  name="Subjects"  class="bg-gray-100 border-2 w-full p-4" onchange="Add_subject()">'
+                  + '<option value="" selected disabled>Select Subject</option>'
+          Subjects.forEach((sub, idx)=> { 
+            html += '<option value="'+sub.id+'">'+sub.name+'</option>'
+          })
+          html += '</select></div></div>'
+          document.getElementById("AddSubject").innerHTML=""
+          if(Edit==true&&SubR.length!=6){
+            document.getElementById("AddSubject").innerHTML=html
+          }
+
+          var head = document.getElementById("head")
+          head.innerHTML = ' <th scope="col" class="px-6 py-4">#</th> <th scope="col" class="px-6 py-4">Name</th>'
+                         + ' <th scope="col" class="px-6 py-4">Code</th>'
+          if(Edit==true){
+            head.innerHTML+= '<th scope="col" class=" py-4">Actions</th>'
+          }
+          var body = document.getElementById("body")
+          var hBody = ""
+
+          SubR.forEach((sub, idx)=> {
+            hBody +='<tr class="border-b dark:border-neutral-500">'
+                  +'<td class="whitespace-nowrap px-6 py-4 font-medium">'
+                  +(idx+1)
+                  +'</td>'
+                  +'<td class="whitespace-nowrap px-6 py-4 ">'
+                  +sub.subject.name
+                  +'</td>'
+                  +'<td class="whitespace-nowrap px-6 py-4">'
+                  +sub.subject.code
+                  +'</td>'
+
+
+            if(Edit==true){
+              hBody +='<td class="whitespace-nowrap px-6 py-4 text-center">'
+                    +'<a class="text-blue-500 text-center underline" style="cursor: pointer;" onclick="delete_subject(\''+sub.id+'\')">'
+                    +'<i class="fa-regular fa-xmark" style="color: #ff0000;"></i>'
+                    +'</a></td>'
+            }
+            hBody +='</tr>'    
+          })
+          body.innerHTML=hBody
+      }
+
+      async function Add_subject(){       
+        var Selector = document.getElementById("Subjects")
+        var ID = Selector.value
+        const response = await fetch('/RegusterToSubject', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: Number(ID) })
+        });
+        if (response.ok) {
+          var data = await response.json()
+          var Subjects = data.Subjects
+          var SubR = data.SubR
+          var Edit = data.Edit
+          build_view(Subjects,SubR,Edit)
+          console.log('Degree updated successfully!');
+        } else {
+            console.log('Error: ', response.statusText);
+        }
+      }
+
+      async function delete_subject(sub_id){
+        const response = await fetch('/DeregisteredToSubject', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: Number(sub_id) })
+        });
+        if (response.ok) {
+          var data = await response.json()
+          var Subjects = data.Subjects
+          var SubR = data.SubR
+          var Edit = data.Edit
+          build_view(Subjects,SubR,Edit)
+        } else {
+            console.log('Error: ', response.statusText);
+        }
+      }
+
+    </script>
+
+
+  <%- include('../layout/footer.ejs') %>
