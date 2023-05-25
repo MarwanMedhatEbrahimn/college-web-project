@@ -113,7 +113,7 @@ router.get('/users/:id',isAdmin, async (req, res) => {
       },
       include: {
         subjects: true,
-        department: true
+        department: true,
       }
     })
     const succeeded = await prisma.stateOFsub.findMany({
