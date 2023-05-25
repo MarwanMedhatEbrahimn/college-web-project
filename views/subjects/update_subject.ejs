@@ -18,9 +18,14 @@
                 </div>
 
                 <div class="mb-4">
-                    <select id="Department"  name="Department" value="<%=%>"  class="bg-gray-100 border-2 w-full p-4">
+                    <select id="Department"  name="Department"   class="bg-gray-100 border-2 w-full p-4">
                         <% Departments.forEach((Department, idx)=> { %>
-                          <option value="<%=Department.id%>"<%=(subject.departmentId==Department.id)?selected:data%>><%=Department.name%></option>
+                            <%if(subject.departmentId!=Department.id){%>
+                                <option value="<%=Department.id%>"><%=Department.name%></option>
+                            <%}else{%>
+                                <option value="<%=Department.id%>" selected><%=Department.name%></option>
+                                
+                            <%}%>
                         <% }) %>
                     </select>  
                 </div>
