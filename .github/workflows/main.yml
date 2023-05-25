@@ -1,22 +1,46 @@
+name: Nodejs Github Action
 
 on:
   push:
     branches:
-      - production
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16
+      - name: Install dependencies 
+        run: npm install
+      - name: Run test
+        run: npm test
      
-      - name: "Login to Docker hub"
-        run: docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_TOKEN }}
+      - name: set up prisma
+        run: npm  install -g prisma
+  
+      - name: set up prisma
+        run: npx  prisma migrate deploy
 
-      - name: "Building  docker image"
+      - name: "Login to Docker hub" 
+        run: docker login --username ${{ secrets.DOCKER_USERNAME}} --password ${{ secrets.DOCKER_TOKEN}}
+
+      - name: "Building docker image"
         run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myimage .
-      
       - name: "Pushing to Docker hub"
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/myimage 
+        run: docker push ${{ secrets.DOCKER_USERNAE }}/myimage
+
+     
+
+     
+
+
+
+
       
