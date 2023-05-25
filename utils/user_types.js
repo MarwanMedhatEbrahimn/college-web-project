@@ -1,7 +1,7 @@
 const USER_TYPES = Object.freeze({
   ADMIN: 'Admin',
   DOCTOR: 'Doctor',
-  USER: 'User'
+  USER: 'Student'
 })
 
 function getUserType(user) {
